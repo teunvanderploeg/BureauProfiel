@@ -18,3 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/formulier', [FormController::class, 'create'])->name('form.create');
+Route::post('/formulier', [FormController::class, 'store'])->name('form.store');

@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Formulier')
+@section('title', 'Formulier | Bureau Profiel')
 
 @section('content')
-    <div class="bg-gray-200 py-32 px-10 min-h-screen ">
-        <form class="bg-white p-10 md:w-3/4 lg:w-1/2 mx-auto">
+    <div class="bg-white py-32 px-10 min-h-screen ">
+        <form class="bg-gray-100 p-10 w-full md:w-5/6 lg:w-3/4 mx-auto">
             @csrf
             @foreach($questions as $question)
                 <div class="flex items-center mb-5">

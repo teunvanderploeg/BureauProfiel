@@ -19,8 +19,7 @@
                            class="inline-block w-1/3 mr-6 text-sm text-gray-600">
                         {{ $question->question }}
                     </label>
-                    <input type="{{$question->answer_type}}" name="{{ $question->slug }}"
-                    class="ml-auto w-2/3">
+                    <x-input :question="$question" />
                 </div>
                 @error($question->slug)
                     <div class="text-red-500 text-xs font-bold">{{ $message }}</div>

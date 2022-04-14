@@ -3,13 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Answer;
-use App\Models\Question;
 use Database\Factories\QuestionFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StoreFormTests extends TestCase
+class StoreFormTest extends TestCase
 {
     /** @test */
     public function it_stores_the_answers_from_the_form()
@@ -26,11 +23,13 @@ class StoreFormTests extends TestCase
             $data = $data + [$question->slug => 'Answer on ' . $question->question];
         }
 
-        $this->post(route('form.store'), $data);
+        $response = $this->post(route('form.store'), $data);
 
+        $response->assertSessionHasNoErrors();
         $this->assertNotEmpty(Answer::all());
     }
 
+    /** @test */
     public function it_gives_an_error_if_you_dont_send_all_the_data()
     {
         QuestionFactory::new()->create([
@@ -44,9 +43,9 @@ class StoreFormTests extends TestCase
             $data = $data + [$question->slug => 'Answer on ' . $question->question];
         }
 
-        $this->post(route('form.store'), $data);
+        $response = $this->post(route('form.store'), $data);
 
-        $this->errorError();
+        $response->assertSessionHasErrors();
         $this->assertEmpty(Answer::all());
     }
 }

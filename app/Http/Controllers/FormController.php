@@ -47,8 +47,11 @@ class FormController extends Controller
     public function getRules(): mixed
     {
         $rules = [];
-        foreach (Question::query()->where('visible', true)->get() as $question) {
-            $rules = $rules + [$question->slug => 'required'];
+        $questions = Question::query()->where('visible', true)->get();
+        foreach ($questions as $question) {
+            if ($question->answer_type !== 'checkbox' || $question->slug == 'Privacy-Statement') {
+                $rules = $rules + [$question->slug => 'required'];
+            }
         }
         return $rules;
     }

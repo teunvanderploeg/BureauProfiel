@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/formulier', [FormController::class, 'index'])->name('form.index');
+Route::get('/formulier', [FormController::class, 'create'])->name('form.create');

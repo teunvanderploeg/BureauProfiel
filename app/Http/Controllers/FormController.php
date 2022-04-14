@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
-    public function index(Request $request)
+    public function create(Request $request)
     {
-        return view('form', ["questions" => Question::all()]);
+        return view('form', ["questions" => Question::query()->where('visible', true)->get()]);
     }
 }

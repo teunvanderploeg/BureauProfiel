@@ -37,11 +37,13 @@ class FormController extends Controller
         ]);
 
         for ($x = 0; $x <= $parametersCount; $x+=1){
-            Answer::query()->create([
-                'respondent_id' => $respondent->getKey(),
-                'question_id' => Question::query()->where('slug', '=', $parametersKeys[$x])->pluck('id')->first(),
-                'answer' => $parametersValues[$x],
-            ]);
+            if ($parametersKeys[$x] !== '_token'){
+                Answer::query()->create([
+                    'respondent_id' => $respondent->getKey(),
+                    'question_id' => Question::query()->where('slug', '=', $parametersKeys[$x])->pluck('id')->first(),
+                    'answer' => $parametersValues[$x],
+                ]);
+            }
         }
         return back();
     }

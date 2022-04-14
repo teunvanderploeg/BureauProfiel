@@ -15,6 +15,11 @@ class QuestionSeeder extends Seeder
      */
     public function run()
     {
+        QuestionFactory::new()->create([
+            "question" => "Wat is je e-mail?",
+            "slug" => 'email',
+            "answer_type" => 'email',
+        ]);
         QuestionFactory::times(5)->create();
     }
 }

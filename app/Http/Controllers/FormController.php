@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Respondent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -24,34 +26,49 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->getRules());
+
         $parameters = $request->all();
-        $parametersKeys = array_keys($parameters);
-        $parametersValues = array_values($parameters);
-        $parametersCount = count($parameters) - 1;
+
+        $respondent = Respondent::query()->create([
+            'email' => $request->get('email'),
+            'accepted' => false,
+        ]);
+
+        for ($x = 0; $x <= (count($parameters) - 1); $x += 1) {
+            $this->createAnswer($parameters, $x, $respondent);
+        }
+        return back()->with('message', 'Je bent ingeschreven in het systeem!');
+    }
+
+    /**
+     * @return array|mixed|string[]
+     */
+    public function getRules(): mixed
+    {
         $rules = [];
         foreach (Question::query()->where('visible', true)->get() as $question) {
             $rules = $rules + [$question->slug => 'required'];
         }
-        $request->validate($rules);
+        return $rules;
+    }
 
-        $email = $request->get('email');
-
-        $respondent = Respondent::query()->create([
-            'email' => $email,
-            'accepted' => false,
-        ]);
-
-        for ($x = 0; $x <= $parametersCount; $x += 1) {
-            $questionId = Question::query()->where('slug', '=', $parametersKeys[$x])->pluck('id')->first();
-            if ($questionId != null) {
-                Answer::query()->create([
-                    'respondent_id' => $respondent->getKey(),
-                    'question_id' => $questionId,
-                    'answer' => $parametersValues[$x],
-                ]);
-            }
+    /**
+     * @param array $parameters
+     * @param int $x
+     * @param Model|Builder $respondent
+     * @return void
+     */
+    public function createAnswer(array $parameters, int $x, Model|Builder $respondent): void
+    {
+        $questionId = Question::query()->where('slug', '=', array_keys($parameters)[$x])->pluck('id')->first();
+        if ($questionId != null) {
+            Answer::query()->create([
+                'respondent_id' => $respondent->getKey(),
+                'question_id' => $questionId,
+                'answer' => array_values($parameters)[$x],
+            ]);
         }
-        return back();
     }
 
 }

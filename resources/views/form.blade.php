@@ -6,6 +6,11 @@
     <div class="bg-white py-32 px-10 min-h-screen ">
         <form class="bg-gray-100 p-10 w-full md:w-5/6 lg:w-3/4 mx-auto" method="POST"
               action="{{ route('form.store') }}">
+            @if(session()->has('message'))
+                <div class="text-green-500 font-bold mx-auto">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             @csrf
             @foreach($questions as $question)
                 <div class="mb-5">

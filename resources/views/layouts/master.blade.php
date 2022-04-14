@@ -9,7 +9,8 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
-<div class="'container mx-auto">
+@include('navigation')
+<div class="'container mx-auto bg-gray-100">
     @yield('content')
 </div>
 </body>

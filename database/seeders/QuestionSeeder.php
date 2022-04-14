@@ -43,7 +43,7 @@ class QuestionSeeder extends Seeder
         QuestionFactory::new()->create([
             "question" => "Wat is je telefoonnummer?",
             "slug" => 'telefoonnummer',
-            "answer_type" => 'text',
+            "answer_type" => 'tel',
         ]);
         QuestionFactory::new()->create([
             "question" => "Wat is je e-mailadres?",

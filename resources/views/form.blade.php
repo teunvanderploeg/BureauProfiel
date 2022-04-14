@@ -8,13 +8,18 @@
               action="{{ route('form.store') }}">
             @csrf
             @foreach($questions as $question)
-                <div class="flex items-center mb-5">
+                <div class="mb-5">
+                <div class="flex items-center">
                     <label for="{{ $question->slug }}"
                            class="inline-block w-1/3 mr-6 text-sm text-gray-600">
                         {{ $question->question }}
                     </label>
                     <input type="{{$question->answer_type}}" name="{{ $question->slug }}"
                     class="ml-auto w-2/3">
+                </div>
+                @error($question->slug)
+                    <div class="text-red-500 text-xs font-bold">{{ $message }}</div>
+                @enderror
                 </div>
             @endforeach
             <div class="text-right">

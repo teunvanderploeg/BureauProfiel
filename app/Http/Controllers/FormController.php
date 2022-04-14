@@ -28,6 +28,11 @@ class FormController extends Controller
         $parametersKeys = array_keys($parameters);
         $parametersValues = array_values($parameters);
         $parametersCount = count($parameters) - 1;
+        $rules = [];
+        foreach (Question::query()->where('visible', true)->get() as $question) {
+            $rules = $rules + [$question->slug => 'required'];
+        }
+        $request->validate($rules);
 
         $email = $request->get('email');
 
@@ -36,11 +41,12 @@ class FormController extends Controller
             'accepted' => false,
         ]);
 
-        for ($x = 0; $x <= $parametersCount; $x+=1){
-            if ($parametersKeys[$x] !== '_token'){
+        for ($x = 0; $x <= $parametersCount; $x += 1) {
+            $questionId = Question::query()->where('slug', '=', $parametersKeys[$x])->pluck('id')->first();
+            if ($questionId != null) {
                 Answer::query()->create([
                     'respondent_id' => $respondent->getKey(),
-                    'question_id' => Question::query()->where('slug', '=', $parametersKeys[$x])->pluck('id')->first(),
+                    'question_id' => $questionId,
                     'answer' => $parametersValues[$x],
                 ]);
             }

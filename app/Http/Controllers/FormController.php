@@ -48,7 +48,9 @@ class FormController extends Controller
     {
         $rules = [];
         foreach (Question::query()->where('visible', true)->get() as $question) {
-            $rules = $rules + [$question->slug => $question->rules];
+            if ($question->rules !== null){
+                $rules = $rules + [$question->slug => $question->rules];
+            }
         }
         return $rules;
     }

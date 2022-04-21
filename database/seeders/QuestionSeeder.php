@@ -73,6 +73,26 @@ class QuestionSeeder extends Seeder
             "answer_type" => 'checkbox',
         ]);
         QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. geboortedatum kind 1?",
+            "slug" => 'geboortedatum-kind-1',
+            "answer_type" => 'date',
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. geboortedatum kind 2?",
+            "slug" => 'geboortedatum-kind-2',
+            "answer_type" => 'date',
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. geboortedatum kind 3?",
+            "slug" => 'geboortedatum-kind-3',
+            "answer_type" => 'date',
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. geboortedatum kind 4?",
+            "slug" => 'geboortedatum-kind-4',
+            "answer_type" => 'date',
+        ]);
+        QuestionFactory::new()->create([
             "question" => "Hoogst genoten afgeronde opleidingsniveau?",
             "slug" => 'afgeronde-opleidingsniveau',
             "answer_type" => 'select',

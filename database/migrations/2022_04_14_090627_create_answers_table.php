@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('respondent_id');
             $table->foreignId('question_id');
-            $table->string('answer');
+            $table->string('answer')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('respondent_id')->references('id')->on('respondents');

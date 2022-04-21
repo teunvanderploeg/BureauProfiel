@@ -47,11 +47,8 @@ class FormController extends Controller
     public function getRules(): mixed
     {
         $rules = [];
-        $questions = Question::query()->where('visible', true)->get();
-        foreach ($questions as $question) {
-            if ($question->answer_type !== 'checkbox' || $question->slug == 'Privacy-Statement') {
-                $rules = $rules + [$question->slug => 'required'];
-            }
+        foreach (Question::query()->where('visible', true)->get() as $question) {
+            $rules = $rules + [$question->slug => $question->rules];
         }
         return $rules;
     }
@@ -65,11 +62,12 @@ class FormController extends Controller
     public function createAnswer(array $parameters, int $x, Model|Builder $respondent): void
     {
         $questionId = Question::query()->where('slug', '=', array_keys($parameters)[$x])->pluck('id')->first();
-        if ($questionId != null) {
+        $answer = array_values($parameters)[$x];
+        if ($questionId != null && $answer != null) {
             Answer::query()->create([
                 'respondent_id' => $respondent->getKey(),
                 'question_id' => $questionId,
-                'answer' => array_values($parameters)[$x],
+                'answer' => $answer,
             ]);
         }
     }

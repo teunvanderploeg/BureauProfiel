@@ -35,7 +35,7 @@ class StoreFormTest extends TestCase
         QuestionFactory::new()->create([
             "question" => "Wat is je e-mail?",
             "slug" => 'email',
-            "rules" => "['required', 'email']",
+            "rules" => ['required', 'email'],
         ]);
         $questions = QuestionFactory::times(3)->create();
 

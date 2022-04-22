@@ -48,7 +48,9 @@ class FormController extends Controller
     {
         $rules = [];
         foreach (Question::query()->where('visible', true)->get() as $question) {
-            if ($question->rules !== null){
+            if ($question->answer_type == 'select'){
+                $rules = $rules + [$question->slug => array_merge(['in:' . $question->sample_answers], $question->rules)];
+            } else if ($question->rules !== null) {
                 $rules = $rules + [$question->slug => $question->rules];
             }
         }

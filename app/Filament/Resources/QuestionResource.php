@@ -39,8 +39,16 @@ class QuestionResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('sample_answers')
                     ->maxLength(65535),
-                Forms\Components\Textarea::make('rules')
-                    ->maxLength(65535),
+                Forms\Components\MultiSelect::make('rules')
+                    ->options([
+                    'required' => 'Required',
+                    'date' => 'Datum',
+                    'email' => 'Email',
+                    'string' => 'String',
+                    'nullable' => 'Nullable',
+                    'max:255' => 'Maximaal 255 tekens',
+                    'unique:respondents' => 'Unique op respondents',
+                ]),
                 Forms\Components\Toggle::make('visible')
                     ->required(),
             ]);

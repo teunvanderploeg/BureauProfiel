@@ -27,9 +27,15 @@ class QuestionResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('answer_type')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('answer_type')
+                    ->options([
+                        'text' => 'Tekst',
+                        'date' => 'Datum',
+                        'checkbox' => 'Checkbox',
+                        'select' => 'Select',
+                        'tel' => 'Telefoon nummer',
+                    ])
+                    ->required(),
                 Forms\Components\Textarea::make('sample_answers')
                     ->maxLength(65535),
                 Forms\Components\Textarea::make('rules')

@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AnswerResource\Pages;
 use App\Filament\Resources\AnswerResource\RelationManagers;
+use App\Filament\Resources\QuestionResource\RelationManagers\AnswersRelationManager;
 use App\Models\Answer;
 use Filament\Forms;
+use Filament\Forms\Components\BelongsToSelect;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -21,9 +23,9 @@ class AnswerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('respondent_id')
+                BelongsToSelect::make('respondent_id')->relationship('respondent', 'email')
                     ->required(),
-                Forms\Components\TextInput::make('question_id')
+                BelongsToSelect::make('question_id')->relationship('question', 'question')
                     ->required(),
                 Forms\Components\TextInput::make('answer')
                     ->required()
@@ -35,8 +37,8 @@ class AnswerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('respondent_id'),
-                Tables\Columns\TextColumn::make('question_id'),
+                Tables\Columns\TextColumn::make('respondent.email'),
+                Tables\Columns\TextColumn::make('question.question'),
                 Tables\Columns\TextColumn::make('answer'),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime(),
@@ -53,7 +55,7 @@ class AnswerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

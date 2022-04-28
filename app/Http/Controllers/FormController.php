@@ -35,9 +35,17 @@ class FormController extends Controller
             'accepted' => false,
         ]);
 
-        for ($x = 0; $x <= (count($parameters) - 1); $x += 1) {
-            $this->createAnswer($parameters, $x, $respondent);
+        foreach (Question::query()->where('visible', '=', true)->get() as $question) {
+            if ($question->answer_type == 'checkbox') {
+                $parameters[$question->slug] = isset($parameters[$question->slug]) ? 'Yes' : 'No';
+            }
+            Answer::query()->create([
+                'respondent_id' => $respondent->getKey(),
+                'question_id' => $question->id,
+                'answer' => $parameters[$question->slug],
+            ]);
         }
+
         return back()->with('message', 'Je bent ingeschreven in het systeem!');
     }
 
@@ -48,7 +56,7 @@ class FormController extends Controller
     {
         $rules = [];
         foreach (Question::query()->where('visible', true)->get() as $question) {
-            if ($question->answer_type == 'select'){
+            if ($question->answer_type == 'select') {
                 $rules = $rules + [$question->slug => array_merge(['in:' . $question->sample_answers], $question->rules)];
             } else if ($question->rules !== null) {
                 $rules = $rules + [$question->slug => $question->rules];
@@ -56,24 +64,4 @@ class FormController extends Controller
         }
         return $rules;
     }
-
-    /**
-     * @param array $parameters
-     * @param int $x
-     * @param Model|Builder $respondent
-     * @return void
-     */
-    public function createAnswer(array $parameters, int $x, Model|Builder $respondent): void
-    {
-        $questionId = Question::query()->where('slug', '=', array_keys($parameters)[$x])->pluck('id')->first();
-        $answer = array_values($parameters)[$x];
-        if ($questionId != null && $answer != null) {
-            Answer::query()->create([
-                'respondent_id' => $respondent->getKey(),
-                'question_id' => $questionId,
-                'answer' => $answer,
-            ]);
-        }
-    }
-
 }

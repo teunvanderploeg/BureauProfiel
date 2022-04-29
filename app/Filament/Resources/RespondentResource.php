@@ -4,18 +4,44 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RespondentResource\Pages;
 use App\Filament\Resources\RespondentResource\RelationManagers;
+use App\Models\Question;
 use App\Models\Respondent;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+
+function getFilter(): array
+{
+    $filters = [];
+
+    $questions = Question::all();
+
+    foreach ($questions as $question) {
+        if ($question->answer_type == 'checkbox') {
+//            $filters[] = SelectFilter::make($question->slug)->relationship('answers', 'answer');
+            $filters[] = Filter::make($question->slug)->query(fn(Builder $query): Builder =>
+            $query->join('answers', function ($join) use ($question) {
+                $join->on('respondents.id', '=', 'answers.respondent_id')
+                    ->where('answers.answer', '=', 'Yes');
+            })->select('respondents.*')
+            );
+        }
+    }
+    return $filters;
+}
 
 class RespondentResource extends Resource
 {
     protected static ?string $model = Respondent::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $navigationGroup = 'Respondent';
 
     public static function form(Form $form): Form
     {
@@ -46,9 +72,7 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters([
-                //
-            ]);
+            ->filters(getFilter());
     }
 
     public static function getRelations(): array

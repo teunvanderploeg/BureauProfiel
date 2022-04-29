@@ -15,6 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        UserFactory::new()->create(['email' => 'developer@bureauprofiel.com']);
+        UserFactory::new()->create([
+            'name' => 'Developer',
+            'email' => 'developer@bureauprofiel.com'
+        ]);
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->integer('Assignment');
+            $table->integer('assignment');
             $table->string('day')->nullable();
             $table->date('date')->nullable();
             $table->dateTime('from');

@@ -38,6 +38,7 @@ class QuestionResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\Textarea::make('sample_answers')
+                    ->helperText('Zorg dat de opties worden gescheiden door een ,')
                     ->maxLength(65535),
                 Forms\Components\MultiSelect::make('rules')
                     ->options([

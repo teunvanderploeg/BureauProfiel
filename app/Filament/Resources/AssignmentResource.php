@@ -15,7 +15,7 @@ class AssignmentResource extends Resource
 {
     protected static ?string $model = Assignment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-puzzle';
 
     protected static ?string $navigationGroup = 'Client';
 

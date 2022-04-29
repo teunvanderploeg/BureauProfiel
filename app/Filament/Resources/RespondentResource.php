@@ -24,12 +24,12 @@ function getFilter(): array
     foreach ($questions as $question) {
         if ($question->answer_type == 'checkbox') {
 //            $filters[] = SelectFilter::make($question->slug)->relationship('answers', 'answer');
-            $filters[] = Filter::make($question->slug)->query(fn(Builder $query): Builder =>
-            $query->join('answers', function ($join) use ($question) {
-                $join->on('respondents.id', '=', 'answers.respondent_id')
-                    ->where('answers.answer', '=', 'Yes');
-            })->select('respondents.*')
-            );
+//            $filters[] = Filter::make($question->slug)->query(fn(Builder $query): Builder =>
+//            $query->join('answers', function ($join) use ($question) {
+//                $join->on('respondents.id', '=', 'answers.respondent_id')
+//                    ->where('answers.answer', '=', 'Yes');
+//            })->select('respondents.*')
+//            );
         }
     }
     return $filters;

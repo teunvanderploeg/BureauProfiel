@@ -141,7 +141,10 @@ return [
     'widgets' => [
         'namespace' => 'App\\Filament\\Widgets',
         'path' => app_path('Filament/Widgets'),
-        'register' => [],
+        'register' => [
+            \App\Filament\Resources\RespondentResource\Widgets\StatisticsOverview::class,
+            \App\Filament\Resources\RespondentResource\Widgets\LatestRespondent::class
+        ],
     ],
 
     /*

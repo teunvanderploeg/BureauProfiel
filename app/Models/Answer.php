@@ -11,12 +11,12 @@ class Answer extends Model
 
     public $fillable = ['respondent_id', 'question_id', 'answer'];
 
-    public function respondents()
+    public function respondent()
     {
-        return $this->hasOne(Respondent::class);
+        return $this->belongsTo(Respondent::class);
     }
-    public function questions()
+    public function question()
     {
-        return $this->hasOne(Question::class);
+        return $this->belongsTo(Question::class);
     }
 }

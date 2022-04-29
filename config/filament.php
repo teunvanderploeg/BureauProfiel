@@ -76,6 +76,7 @@ return [
     */
 
     'brand' => env('APP_NAME'),
+    'brand' => env('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -142,8 +143,8 @@ return [
         'namespace' => 'App\\Filament\\Widgets',
         'path' => app_path('Filament/Widgets'),
         'register' => [
-            Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            \App\Filament\Resources\RespondentResource\Widgets\StatisticsOverview::class,
+            \App\Filament\Resources\RespondentResource\Widgets\LatestRespondent::class
         ],
     ],
 
@@ -202,7 +203,7 @@ return [
             'alignment' => 'center',
         ],
         'sidebar' => [
-            'is_collapsible_on_desktop' => false,
+            'is_collapsible_on_desktop' => true,
         ],
         'tables' => [
             'actions' => [

@@ -25,6 +25,9 @@ php artisan key:generate
 
 # Migrate and seed the tables and data to your database
 php artisan migrate --seed
+
+# Link your storage
+php artisan storage:link
 ```
 ### Setup Environment
 

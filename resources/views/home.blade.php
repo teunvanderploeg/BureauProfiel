@@ -11,7 +11,7 @@
                     <p class="pl-1 font-bold">Meedoen aan marktonderzoeken?</p>
                 </div>
                 <div>
-                    <h1 class="text-7xl font-bold leading-tight">Jouw mening <br> is geld waard!</h1>
+                    <h1 class="sm:text-7xl text-5xl font-bold leading-tight">Jouw mening <br> is geld waard!</h1>
                 </div>
                 <div class="pt-4 w-5/6 leading-loose">
                     <p>Bureau Profiel biedt jou de mogelijkheid wat te doen met je stem! Word respondent en help de
@@ -43,10 +43,10 @@
                         <p class="pl-2 my-auto text-bp_purple">Flexibele tijden</p>
                     </div>
                 </div>
-                <div class="flex pt-4">
+                <div class="sm:flex sm:pt-4 pt-8">
                     <x-speech-cloud color="purple" direction="top" text="Ik wil me inschrijven"
                                     route="form.create"/>
-                    <a href="#" class="font-bold my-auto pl-9 whitespace-nowrap">Hoe werkt het? ></a>
+                    <a href="#" class="font-bold my-auto pl-3 sm:pl-9 whitespace-nowrap">Hoe werkt het? ></a>
                 </div>
             </div>
             <div class="m-auto md:block hidden relative pt-8" x-data="{activeSlide: 0, slides: [0, 1, 2]}">
@@ -93,14 +93,15 @@
         </div>
         <div class="w-full bg-bp_purple flex justify-center p-4 mt-16">
             <p class="text-white font-bold my-auto pr-4">Ondernemer? Laat je marktonderzoek uitvoeren!</p>
-            <x-speech-cloud color="orange" direction="bottom" text="Offerte aanvragen" route="home"/>
+            <x-speech-cloud color="orange" direction="bottom" text="Offerte aanvragen" route="home" class="m-auto sm:m-0"/>
         </div>
     </div>
+
     <div class="bg-white md:flex pt-16 sm:pt-24 justify-between">
-        <div class="md:w-1/2 flex">
+        <div class="container md:w-1/2 flex">
             <img src="{{ asset('images/3_persones.png') }}" alt="persones" class="md:w-3/4 w-5/6 m-auto">
         </div>
-        <div class="md:w-1/2 flex md:pt-0 pt-8">
+        <div class="container md:w-1/2 flex md:pt-0 pt-8">
             <div class="md:w-3/4 w-5/6 m-auto">
                 <p class="text-3xl font-bold leading-tight">Geef je mening over nieuwe producten en ontvang een
                     vergoeding!</p>
@@ -115,4 +116,9 @@
         </div>
     </div>
 
+    <div class="bg-bp_white">
+        <div class="container pt-16 sm:pt-24">
+
+        </div>
+    </div>
 @endsection

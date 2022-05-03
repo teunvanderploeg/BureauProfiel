@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/', 'welcome')->name('home');
+Route::view('/', 'home')->name('home');
 
 Route::get('/formulier', [FormController::class, 'create'])->name('form.create');
 Route::post('/formulier', [FormController::class, 'store'])->name('form.store');

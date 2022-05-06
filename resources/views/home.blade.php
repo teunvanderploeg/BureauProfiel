@@ -49,55 +49,13 @@
                     <a href="#" class="font-bold my-auto pl-3 sm:pl-9 whitespace-nowrap">Hoe werkt het? ></a>
                 </div>
             </div>
-            <div class="m-auto md:block hidden relative pt-8" x-data="{activeSlide: 0, slides: [0, 1, 2]}">
-                <div class="">
-                    <img x-show="activeSlide == 0" class="h-[35rem]" src="{{ asset('images/respondent1.png') }}"
-                         alt="respondent 1">
-                    <img x-cloak x-show="activeSlide == 1" class="h-[35rem]" src="{{ asset('images/respondent2.png') }}"
-                         alt="respondent 2">
-                    <img x-cloak x-show="activeSlide == 2" class="h-[35rem]" src="{{ asset('images/respondent3.png') }}"
-                         alt="respondent 3">
-                </div>
-                <div class="flex w-2/3">
-                    <div class="w-1/2">
-                        <p x-show="activeSlide == 0" class="font-bold">Kamilla, 22</p>
-                        <p x-show="activeSlide == 1" class="font-bold">Klaas, 29</p>
-                        <p x-show="activeSlide == 2" class="font-bold">Kim, 24</p>
-                    </div>
-                    <div class="w-1/2 flex ml-auto">
-                        <button
-                            class="w-3 h-3 m-2 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-bp_orange hover:shadow-lg"
-                            :class="{'bg-bp_orange': activeSlide === 0,'bg-gray-300': activeSlide !== 0}"
-                            x-on:click="activeSlide = 0"
-                        ></button>
-                        <button
-                            class="w-3 h-3 m-2 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-bp_orange hover:shadow-lg"
-                            :class="{'bg-bp_orange': activeSlide === 1,'bg-gray-300': activeSlide !== 1}"
-                            x-on:click="activeSlide = 1"
-                        ></button>
-                        <button
-                            class="w-3 h-3 m-2 rounded-full overflow-hidden transition-colors duration-200 ease-out hover:bg-bp_orange hover:shadow-lg"
-                            :class="{'bg-bp_orange': activeSlide === 2,'bg-gray-300': activeSlide !== 2}"
-                            x-on:click="activeSlide = 2"
-                        ></button>
-                    </div>
-                    <div
-                        class="w-1/3 flex text-white h-64 w-64 bg-bp_purple font-bold px-7 py-2 rounded-l-full transition rounded-t-full border-bp_purple absolute right-0 bottom-5">
-                        <p x-show="activeSlide == 0" class="m-auto text-3xl text-center">“Absoluut de moeite waard!”</p>
-                        <p x-show="activeSlide == 1" class="m-auto text-3xl text-center">“Beter dan dit wordt het
-                            niet!”</p>
-                        <p x-show="activeSlide == 2" class="m-auto text-3xl text-center">“Ik raad het je echt aan!”</p>
-                    </div>
-                </div>
-            </div>
+            <x-homepage-carousel/>
         </div>
-        <div class="w-full bg-bp_purple flex justify-center p-4 mt-16">
-            <p class="text-white font-bold my-auto pr-4">Ondernemer? Laat je marktonderzoek uitvoeren!</p>
-            <x-speech-cloud color="orange" direction="bottom" text="Offerte aanvragen" route="home" class="m-auto sm:m-0"/>
-        </div>
+        <x-business-bar/>
     </div>
 
-    <div class="bg-white md:flex pt-16 sm:pt-24 justify-between">
+    <div class="md:flex pt-16 sm:pt-24 justify-between"
+         style="background: linear-gradient(0deg, #FFF7EF 10%, white 10%)">
         <div class="container md:w-1/2 flex">
             <img src="{{ asset('images/3_persones.png') }}" alt="persones" class="md:w-3/4 w-5/6 m-auto">
         </div>
@@ -110,15 +68,44 @@
                     over de nieuwste trends en ontwikkelingen en hier geld mee te verdienen!</p>
                 <div class="flex pt-4 mx-auto">
                     <x-speech-cloud color="purple" direction="top" text="Hoe werkt het?" route="home"/>
-                    <a href="{{ route('form.create') }}" class="font-bold my-auto pl-9 whitespace-nowrap">Gelijk inschrijven ></a>
+                    <a href="{{ route('form.create') }}" class="font-bold my-auto pl-9 whitespace-nowrap">Gelijk
+                        inschrijven ></a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="bg-bp_white">
-        <div class="container pt-16 sm:pt-24">
+        <div class="container mx-auto pt-16 sm:pt-24">
+            <div class="flex flex-col md:flex-row pb-3 mx-6 md:mx-0">
+                <p class="mr-auto my-auto font-bold text-3xl">Wij zijn op zoek naar jou!</p>
+                <a class="ml-auto my-auto font-bold" href="#">Bekijk alle onderzoeken ></a>
+            </div>
+            <div
+                class="pb-4 pt-7 bg-bp_purple md:rounded-r-2xl md:rounded-b-2xl grid grid-cols-1 md:grid-cols-2 text-center ">
+                @foreach($assignments as $assignment)
+                    <x-research-block :image="$assignment->image" :title="$assignment->title"
+                                      :description="$assignment->description" :link="$assignment->link"/>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
+    <div class="bg-bp_white">
+        <div class="container mx-auto pt-24">
+            <div class="flex mx-auto text-center">
+                <div class="ml-auto border-b border-1 border-bp_orange w-6 h-0 my-auto"></div>
+                <p class="px-4 font-bold">Waardevolle onderzoeken met échte mensen</p>
+                <div class="mr-auto border-b border-1 border-bp_orange w-6 h-0 my-auto"></div>
+            </div>
+            <div class="flex">
+                <h2 class="text-4xl font-bold mx-auto w-2/3 text-center">Hoe denken onze respondenten over hun
+                    deelname?</h2>
+            </div>
+            <div></div>
+            <div class="flex">
+                <a href="#" class="font-bold mx-auto w-2/3 text-center">Bekijk het gehele proces van a tot z ></a>
+            </div>
         </div>
     </div>
 @endsection

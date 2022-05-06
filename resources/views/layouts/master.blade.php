@@ -10,7 +10,7 @@
 </head>
 <body>
 @include('navigation')
-<div class="">
+<div class="overflow-x-hidden">
     @yield('content')
 </div>
 </body>

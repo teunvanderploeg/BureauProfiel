@@ -31,12 +31,12 @@ class RunningAssignmentResource extends Resource
                     ->maxLength(65535),
                 Forms\Components\Toggle::make('visible')
                     ->required(),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
                 Forms\Components\TextInput::make('link')
                     ->url()
                     ->required()
                     ->maxLength(500),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
             ]);
     }
 

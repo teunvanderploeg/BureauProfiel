@@ -10,6 +10,9 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 
 class UserResource extends Resource
 {
@@ -28,6 +31,12 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->visible(fn (Component $livewire): bool => $livewire instanceof Pages\CreateUser),
             ]);
     }
 
@@ -35,17 +44,21 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\BooleanColumn::make('email_verified_at')->label('Verified'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime('M j, Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                    ->dateTime('M j, Y')
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('verified')
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
+                Tables\Filters\Filter::make('unverified')
+                    ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
             ]);
     }
 

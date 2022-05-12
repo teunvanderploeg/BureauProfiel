@@ -45,10 +45,12 @@ class RunningAssignmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('description')
+                    ->limit('50'),
                 Tables\Columns\BooleanColumn::make('visible'),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('link'),
+                Tables\Columns\TextColumn::make('link')
+                    ->limit('50'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

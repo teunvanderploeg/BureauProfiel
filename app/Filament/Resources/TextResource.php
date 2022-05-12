@@ -37,7 +37,8 @@ class TextResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\TextColumn::make('text'),
+                Tables\Columns\TextColumn::make('text')
+                    ->limit('50'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

@@ -62,11 +62,12 @@ class RespondentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
                 Tables\Columns\BooleanColumn::make('accepted'),
-                Tables\Columns\TextColumn::make('notes'),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('notes')
+                    ->searchable()
+                    ->limit('30'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

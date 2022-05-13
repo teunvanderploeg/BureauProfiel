@@ -211,5 +211,96 @@ class QuestionSeeder extends Seeder
             "answer_type" => "checkbox",
             "rules" => ['required'],
         ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je land van herkomst?",
+            "slug" => "land-van-herkomst",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaret?",
+            "slug" => "sigaret",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Roken Merk?",
+            "slug" => "roken-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Shag?",
+            "slug" => "shag",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Shag merk?",
+            "slug" => "shag-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaar?",
+            "slug" => "sigaar",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaar Merk?",
+            "slug" => "sigaar-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Roken Soort?",
+            "slug" => "roken-soort",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Welk huisdier heb je?",
+            "slug" => "huisdier",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Welke auto heb je?",
+            "slug" => "auto",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Vaatwasser?",
+            "slug" => "vaatwasser",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je gezinssamenstelling?",
+            "slug" => "gezinssamenstelling",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je burgelijkestaat?",
+            "slug" => "burgelijkestaat",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
     }
 }

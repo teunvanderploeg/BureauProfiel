@@ -61,14 +61,14 @@ class QuestionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('question'),
+                Tables\Columns\TextColumn::make('question')->searchable(),
                 Tables\Columns\TextColumn::make('slug'),
                 Tables\Columns\TextColumn::make('answer_type'),
-                Tables\Columns\TextColumn::make('sample_answers'),
-                Tables\Columns\TextColumn::make('rules'),
+                Tables\Columns\TextColumn::make('sample_answers')
+                    ->limit('30'),
+                Tables\Columns\TextColumn::make('rules')
+                    ->limit('30'),
                 Tables\Columns\BooleanColumn::make('visible'),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

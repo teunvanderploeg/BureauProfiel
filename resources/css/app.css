@@ -1,6 +1,14 @@
 @import '../../vendor/filament/forms/dist/module.esm.css';
 @import '~tippy.js/dist/tippy.css';
 @import '~tippy.js/themes/light.css';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] { display: none !important; }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}

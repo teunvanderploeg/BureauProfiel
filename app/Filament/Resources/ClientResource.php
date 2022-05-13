@@ -62,7 +62,8 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('postal_city'),
                 Tables\Columns\TextColumn::make('number'),
                 Tables\Columns\TextColumn::make('fax'),
-                Tables\Columns\TextColumn::make('info'),
+                Tables\Columns\TextColumn::make('info')
+                    ->limit('50'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

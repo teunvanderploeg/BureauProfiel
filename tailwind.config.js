@@ -9,7 +9,14 @@ module.exports = {
     darkMode: 'class',
     theme: {
         extend: {
+            fontSize: {
+                '7xl': '5rem',
+            },
             colors: {
+                bp_white: '#FFF7EF',
+                bp_orange: '#EA9010',
+                bp_purple: '#582A5B',
+
                 danger: colors.red,
                 primary: colors.purple,
                 success: colors.green,

@@ -10,7 +10,7 @@
 </head>
 <body>
 @include('navigation')
-<div class="'container mx-auto bg-gray-100">
+<div class="overflow-x-hidden">
     @yield('content')
 </div>
 </body>

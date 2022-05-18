@@ -53,7 +53,7 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters();
+            ->filters([]);
     }
 
     public static function getRelations(): array

@@ -5,8 +5,10 @@ namespace App\Filament\Pages;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Respondent;
-use Filament\Pages\Actions\Action;
 use Filament\Pages\Page;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\WithPagination;
 
 class Search extends Page
 {
@@ -14,10 +16,12 @@ class Search extends Page
 
     protected static string $view = 'filament.pages.search';
 
-    public $respondents = null;
-    public $respondentId = 1;
+    public $respondents;
+    public $respondent;
     public $searchPage = True;
-    public $questions = [];
+    public $questions;
+    public $respondentCount = 0;
+    public $respondentsCount;
 
     public function mount()
     {
@@ -26,49 +30,83 @@ class Search extends Page
 
     public function search($data)
     {
-        $query = Answer::query();
+        $respondentsArray = null;
+        $firstRound = True;
+
         foreach ($this->questions as $question) {
-            if (isset($data[$question->slug])) {
-                if ($question->answer_type == 'checkbox') {
-                    if ($data[$question->slug] == 'on') {
-//                        $query->where(, '=', True);
-                    }
-                }
+            $query = Answer::query()->with('respondent');
+            if (($data[$question->slug] ?? null) != null || ($data[$question->slug . '-1'] ?? null) != null) {
+
+                $this->makeQuery($question, $query, $data);
+
+                $respondentsArray = $this->getRespondents($query, $firstRound, $respondentsArray);
+
+                $firstRound = False;
             }
         }
-        $respondentIds = [];
-        foreach ($query->get() as $anser) {
-            $respondentIds = array_merge($respondentIds, array($anser->respondent->id));
-        }
-        $respondentIds = array_unique($respondentIds);
-        $this->respondents = Respondent::query()->findMany($respondentIds);
-        $this->respondent = $this->respondents->first();
 
+        $respondentQuery = Respondent::query();
+
+        if (($data['nodes'] ?? null) != null) {
+            $respondentQuery->where('notes', 'like', '%' . $data['nodes'] . '%');
+        }
+
+        $respondents = $firstRound ? $respondentQuery : $respondentQuery->whereIn('id', $respondentsArray);
+        $this->respondentsCount = $respondents->count();
+
+        $this->respondents = $respondents->get();
+        $this->respondent = $this->respondents->take(1)->skip(0);
         $this->searchPage = False;
     }
 
-    public function changeSearchPage()
+    public function nextRespondent()
     {
-        $this->searchPage = True;
-    }
-
-    function makeQuery(): array
-    {
-        $filters = [];
-
-        $questions = Question::all();
-
-        foreach ($questions as $question) {
-            if ($question->answer_type == 'checkbox') {
-//            $filters[] = SelectFilter::make($question->slug)->relationship('answers', 'answer');
-//            $filters[] = Filter::make($question->slug)->query(fn(Builder $query): Builder =>
-//            $query->join('answers', function ($join) use ($question) {
-//                $join->on('respondents.id', '=', 'answers.respondent_id')
-//                    ->where('answers.answer', '=', 'Yes');
-//            })->select('respondents.*')
-//            );
-            }
+        if ($this->respondentCount != ($this->respondentsCount - 1)){
+            $this->respondentCount++;
+            $this->respondent = $this->respondents->skip($this->respondentCount)->take(1);
         }
-        return $filters;
     }
+
+    public function previousRespondent()
+    {
+        if ($this->respondentCount != 0){
+            $this->respondentCount--;
+            $this->respondent = $this->respondents->skip($this->respondentCount)->take(1);
+        }
+    }
+
+    function getDuplicates($array): array
+    {
+        return array_unique(array_diff_assoc($array, array_unique($array)));
+    }
+
+
+    public function getRespondents(Builder $query, bool $firstRound, ?array $respondents): array
+    {
+        $newRespondentsArray = $query->get()->pluck('respondent.id')->toArray();
+        if (!$firstRound) {
+            $newRespondentsArray = $this->getDuplicates(array_merge($respondents, $newRespondentsArray));
+        }
+        return $newRespondentsArray;
+    }
+
+    public function makeQuery(mixed $question, Builder $query, $data): void
+    {
+        $query->where('question_id', '=', $question->id);
+        switch ($question->answer_type) {
+            case 'checkbox':
+                $query->where('answer', '=', 1);
+                break;
+            case 'text':
+                $query->where('answer', 'like', '%' . $data[$question->slug] . '%');
+                break;
+            case 'date':
+                $query->whereBetween('answer', [date($data[$question->slug . '-1']), date($data[$question->slug . '-2'])]);
+                break;
+            default:
+                $query->where('answer', '=', $data[$question->slug]);
+                break;
+        }
+    }
+
 }

@@ -106,9 +106,9 @@
                             @endif
                         @endforeach
                     </div>
-                    <div class="p-2 m-2 text-sm bg-white rounded-2xl">
+                    <div class="p-2 m-2 text-sm bg-white rounded-2xl h-full">
                         <p class="font-light">Notes.</p>
-                        <p class="font-bold">{!! $respondent->notes !!}</p>
+                        <textarea id="notes" readonly class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea >
                     </div>
                 </div>
             @endforeach

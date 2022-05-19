@@ -23,6 +23,7 @@ class Search extends Page
     public $respondentCount = 0;
     public $respondentsCount;
     public $emailList;
+    public $data;
 
     public function mount()
     {
@@ -33,6 +34,7 @@ class Search extends Page
     {
         $respondentsArray = null;
         $firstRound = True;
+        $this->data = collect($data);
 
         foreach ($this->questions as $question) {
             $query = Answer::query()->with('respondent');

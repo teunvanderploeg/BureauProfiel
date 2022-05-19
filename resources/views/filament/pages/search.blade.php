@@ -14,8 +14,10 @@
                                         <select name="{{ $question->slug }}" class="text-xs mx-auto w-full my-auto">
                                             <option value=""></option>
                                             @foreach($question->getArrayOfAnswers() as $answers)
-                                                <option @if(old($question->slug) == $answers) selected
-                                                        @endif value="{{$answers}}">{{$answers}}</option>
+                                                <option
+                                                    @if(isset($data[$question->slug]) && $data[$question->slug] == $answers) selected
+                                                    @endif
+                                                    value="{{ $answers }}">{{ $answers }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -23,21 +25,24 @@
 
                                 @case('checkbox')
                                     <div class="w-full h-full flex">
-                                        <input type="checkbox" @if(old($question->slug)) checked
-                                               @endif name="{{ $question->slug }}" class="ml-auto my-auto">
+                                        <input type="checkbox" @if(isset($data[$question->slug])) checked @endif
+                                        name="{{ $question->slug }}" class="ml-auto my-auto">
                                     </div>
                                     @break
                                 @case('date')
                                     <div class="flex flex-col mx-auto">
                                         <input type="date" name="{{ $question->slug }}-1"
+                                               @if(isset($data)) value="{{ $data["$question->slug-1"] }}" @endif
                                                class="text-xs p-1 w-full h-6">
                                         <input type="date" name="{{ $question->slug }}-2"
+                                               @if(isset($data)) value="{{ $data["$question->slug-2"] }}" @endif
                                                class="text-xs p-1 w-full h-6">
                                     </div>
                                     @break
                                 @default
                                     <div class="w-full h-full flex">
-                                        <input type="{{ $question->answer_type }}" value="{{ old($question->slug) }}"
+                                        <input type="{{ $question->answer_type }}"
+                                               @if(isset($data)) value="{{ $data[$question->slug] }}" @endif
                                                name="{{ $question->slug }}"
                                                class="text-xs w-full my-auto">
                                     </div>
@@ -48,8 +53,8 @@
                 <div class="flex p-2 justify-between bg-white rounded-lg w-full">
                     <p class="text-xs w-3/5">Notes</p>
                     <div class="w-2/5">
-                        <input type="text" value="{{ old('nodes') }}" name="nodes"
-                               class="text-xs w-full"/>
+                        <input type="text" name="nodes" class="text-xs w-full"
+                               @if(isset($data['notes'])) value="{{ $data['notes'] }}" @endif />
                     </div>
                 </div>
             </div>
@@ -101,14 +106,11 @@
                             @endif
                         @endforeach
                     </div>
-                    <div class="pt-1">
-                        <button onclick="copyText('{{$emailList}}')"
-                            class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
-                            Copy all emails
-                        </button>
+                    <div class="p-2 m-2 text-sm bg-white rounded-2xl">
+                        <p class="font-light">Notes.</p>
+                        <p class="font-bold">{!! $respondent->notes !!}</p>
                     </div>
                 </div>
-
             @endforeach
             <div>
                 @else
@@ -121,17 +123,25 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="text-center w-full cursor-pointer" wire:click="changeSearchPage()">
-                            <p class="text-blue-400 hover:text-blue-600">Terug</p>
-                        </div>
-                    </div>
                 @endif
+                <div class="pt-1">
+                    <button wire:click="changeSearchPage()"
+                            class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                        Back to filter
+                    </button>
+                    @if($emailList != null)
+                        <button onclick="copyText('{{ $emailList }}')"
+                                class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                            Copy all emails
+                        </button>
+                </div>
             </div>
         @endif
+    </div>
+@endif
 
-        <script>
-            function copyText(text) {
-                navigator.clipboard.writeText(text);
-            }
-        </script>
+<script>
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+    }
+</script>

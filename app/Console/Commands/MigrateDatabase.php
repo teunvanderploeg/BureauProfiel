@@ -30,7 +30,7 @@ class MigrateDatabase extends Command
      */
     public function handle()
     {
-        $json = File::get('database/data/ProfielDatabase.json');
+        $json = File::get('database/data/ProfielTestDatabase.json');
         $this->jsonDatabase = json_decode($json);
 
         foreach ($this->jsonDatabase as $tabel){

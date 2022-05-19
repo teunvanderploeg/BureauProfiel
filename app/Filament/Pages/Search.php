@@ -22,10 +22,11 @@ class Search extends Page
     public $questions;
     public $respondentCount = 0;
     public $respondentsCount;
+    public $emailList;
 
     public function mount()
     {
-        $this->questions = Question::all();
+        $this->questions = Question::query()->where('searchable', '=', True)->get();
     }
 
     public function search($data)
@@ -54,9 +55,11 @@ class Search extends Page
         $respondents = $firstRound ? $respondentQuery : $respondentQuery->whereIn('id', $respondentsArray);
         $this->respondentsCount = $respondents->count();
 
+        $this->setEmailList($respondents);
+
         $this->respondents = $respondents->get();
         $this->respondent = $this->respondents->take(1)->skip(0);
-        $this->searchPage = False;
+        $this->changeSearchPage();
     }
 
     public function nextRespondent()
@@ -107,6 +110,21 @@ class Search extends Page
                 $query->where('answer', '=', $data[$question->slug]);
                 break;
         }
+    }
+
+    public function changeSearchPage()
+    {
+        $this->searchPage = !$this->searchPage;
+    }
+
+    public function setEmailList(Builder $respondents): void
+    {
+        $emails = $respondents->get('email');
+        $emailsString = '';
+        foreach ($emails as $email) {
+            $emailsString = $emailsString . ' ' . $email->email;
+        }
+        $this->emailList = $emailsString;
     }
 
 }

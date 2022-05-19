@@ -30,6 +30,23 @@ class QuestionResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\MultiSelect::make('rules')
+                    ->options([
+                        'required' => 'Required',
+                        'date' => 'Datum',
+                        'email' => 'Email',
+                        'string' => 'String',
+                        'nullable' => 'Nullable',
+                        'max:255' => 'Maximaal 255 tekens',
+                        'unique:respondents' => 'Unique op respondents',
+                    ]),
+                Forms\Components\Textarea::make('sample_answers')
+                    ->helperText('Zorg dat de opties worden gescheiden door een ,')
+                    ->maxLength(65535),
+                Forms\Components\Toggle::make('visible')
+                    ->required(),
+                Forms\Components\Toggle::make('searchable')
+                    ->required(),
                 Forms\Components\Select::make('answer_type')
                     ->options([
                         'text' => 'Tekst',
@@ -38,21 +55,6 @@ class QuestionResource extends Resource
                         'select' => 'Select',
                         'tel' => 'Telefoon nummer',
                     ])
-                    ->required(),
-                Forms\Components\Textarea::make('sample_answers')
-                    ->helperText('Zorg dat de opties worden gescheiden door een ,')
-                    ->maxLength(65535),
-                Forms\Components\MultiSelect::make('rules')
-                    ->options([
-                    'required' => 'Required',
-                    'date' => 'Datum',
-                    'email' => 'Email',
-                    'string' => 'String',
-                    'nullable' => 'Nullable',
-                    'max:255' => 'Maximaal 255 tekens',
-                    'unique:respondents' => 'Unique op respondents',
-                ]),
-                Forms\Components\Toggle::make('visible')
                     ->required(),
             ]);
     }
@@ -69,6 +71,7 @@ class QuestionResource extends Resource
                 Tables\Columns\TextColumn::make('rules')
                     ->limit('30'),
                 Tables\Columns\BooleanColumn::make('visible'),
+                Tables\Columns\BooleanColumn::make('searchable'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

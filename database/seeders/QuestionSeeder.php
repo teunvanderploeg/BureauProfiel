@@ -93,7 +93,7 @@ class QuestionSeeder extends Seeder
             "question" => "Indien thuiswonende kinderen. Geslacht kind 1?",
             "slug" => "geslacht-kind-1",
             "answer_type" => "select",
-            "sample_answers" => "Jonge,Meisje",
+            "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-1,null'],
         ]);
         QuestionFactory::new()->create([
@@ -106,7 +106,7 @@ class QuestionSeeder extends Seeder
             "question" => "Indien thuiswonende kinderen. Geslacht kind 2?",
             "slug" => "geslacht-kind-2",
             "answer_type" => "select",
-            "sample_answers" => "Jonge,Meisje",
+            "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-2,null'],
         ]);
         QuestionFactory::new()->create([
@@ -119,7 +119,7 @@ class QuestionSeeder extends Seeder
             "question" => "Indien thuiswonende kinderen. Geslacht kind 3?",
             "slug" => "geslacht-kind-3",
             "answer_type" => "select",
-            "sample_answers" => "Jonge,Meisje",
+            "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-3,null'],
         ]);
         QuestionFactory::new()->create([
@@ -132,7 +132,7 @@ class QuestionSeeder extends Seeder
             "question" => "Indien thuiswonende kinderen. Geslacht kind 4?",
             "slug" => "geslacht-kind-4",
             "answer_type" => "select",
-            "sample_answers" => "Jonge,Meisje",
+            "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-4,null'],
         ]);
         QuestionFactory::new()->create([

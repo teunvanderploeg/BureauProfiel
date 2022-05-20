@@ -103,7 +103,11 @@ class Search extends Page
                 $query->where('answer', '=', 1);
                 break;
             case 'text':
-                $query->where('answer', 'like', '%' . $data[$question->slug] . '%');
+                if ($question->slug == 'postcode') {
+                    $query->where('answer', 'like',$data[$question->slug] . '%');
+                } else {
+                    $query->where('answer', 'like', '%' . $data[$question->slug] . '%');
+                }
                 break;
             case 'date':
                 $query->whereBetween('answer', [date($data[$question->slug . '-1']), date($data[$question->slug . '-2'])]);

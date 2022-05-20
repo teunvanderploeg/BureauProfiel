@@ -90,10 +90,24 @@ class QuestionSeeder extends Seeder
             "rules" => ['required_unless:thuiswonende-kinderen,null', 'date'],
         ]);
         QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 1?",
+            "slug" => "geslacht-kind-1",
+            "answer_type" => "select",
+            "sample_answers" => "Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-1,null'],
+        ]);
+        QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 2?",
             "slug" => "geboortedatum-kind-2",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 2?",
+            "slug" => "geslacht-kind-2",
+            "answer_type" => "select",
+            "sample_answers" => "Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-2,null'],
         ]);
         QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 3?",
@@ -102,10 +116,24 @@ class QuestionSeeder extends Seeder
             "rules" => ['nullable', 'date'],
         ]);
         QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 3?",
+            "slug" => "geslacht-kind-3",
+            "answer_type" => "select",
+            "sample_answers" => "Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-3,null'],
+        ]);
+        QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 4?",
             "slug" => "geboortedatum-kind-4",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 4?",
+            "slug" => "geslacht-kind-4",
+            "answer_type" => "select",
+            "sample_answers" => "Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-4,null'],
         ]);
         QuestionFactory::new()->create([
             "question" => "Hoogst genoten afgeronde opleidingsniveau?",

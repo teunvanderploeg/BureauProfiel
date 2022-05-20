@@ -51,9 +51,11 @@
                     </div>
                 @endforeach
                 <div class="flex p-2 justify-between bg-white rounded-lg w-full">
-                    <p class="text-xs w-3/5">Notes</p>
+                    <div class="w-3/5 flex">
+                        <p class="text-xs my-auto pr-1">Notes</p>
+                    </div>
                     <div class="w-2/5">
-                        <input type="text" name="nodes" class="text-xs w-full"
+                        <input type="text" name="nodes" class="text-xs w-full my-auto"
                                @if(isset($data['notes'])) value="{{ $data['notes'] }}" @endif />
                     </div>
                 </div>
@@ -86,7 +88,7 @@
                 <div class="flex flex-col p-2 rounded-2xl">
                     <div class="container grid grid-cols-3">
                         @foreach($respondent->answers as $answer)
-                            @if($answer->question->searchable)
+                            @if($answer->question->searchable && $answer->answer != null)
                                 <div class="p-2 m-2 text-sm bg-white rounded-2xl">
                                     <p class="font-light">{{ $answer->question->question }}</p>
                                     <p class="font-bold">
@@ -108,7 +110,8 @@
                     </div>
                     <div class="p-2 m-2 text-sm bg-white rounded-2xl h-full">
                         <p class="font-light">Notes.</p>
-                        <textarea id="notes" readonly class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea >
+                        <textarea id="notes" readonly
+                                  class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea>
                     </div>
                 </div>
             @endforeach

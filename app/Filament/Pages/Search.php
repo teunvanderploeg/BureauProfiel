@@ -6,9 +6,7 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Respondent;
 use Filament\Pages\Page;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\WithPagination;
 
 class Search extends Page
 {

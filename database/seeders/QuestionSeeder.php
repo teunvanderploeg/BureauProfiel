@@ -90,22 +90,54 @@ class QuestionSeeder extends Seeder
             "rules" => ['required_unless:thuiswonende-kinderen,null', 'date'],
         ]);
         QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 1?",
+            "slug" => "geslacht-kind-1",
+            "answer_type" => "select",
+            "sample_answers" => ",Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-1,null'],
+        ]);
+        QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 2?",
             "slug" => "geboortedatum-kind-2",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
         ]);
         QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 2?",
+            "slug" => "geslacht-kind-2",
+            "answer_type" => "select",
+            "sample_answers" => ",Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-2,null'],
+        ]);
+        QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 3?",
             "slug" => "geboortedatum-kind-3",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 3?",
+            "slug" => "geslacht-kind-3",
+            "answer_type" => "select",
+            "sample_answers" => ",Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-3,null'],
+            'searchable' => false,
         ]);
         QuestionFactory::new()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 4?",
             "slug" => "geboortedatum-kind-4",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Indien thuiswonende kinderen. Geslacht kind 4?",
+            "slug" => "geslacht-kind-4",
+            "answer_type" => "select",
+            "sample_answers" => ",Jonge,Meisje",
+            "rules" => ['required_unless:geboortedatum-kind-4,null'],
+            'searchable' => false,
         ]);
         QuestionFactory::new()->create([
             "question" => "Hoogst genoten afgeronde opleidingsniveau?",
@@ -210,6 +242,108 @@ class QuestionSeeder extends Seeder
             "slug" => "Privacy-Statement",
             "answer_type" => "checkbox",
             "rules" => ['required'],
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je land van herkomst?",
+            "slug" => "land-van-herkomst",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaret?",
+            "slug" => "sigaret",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Roken Merk?",
+            "slug" => "roken-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Shag?",
+            "slug" => "shag",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Shag merk?",
+            "slug" => "shag-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaar?",
+            "slug" => "sigaar",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Sigaar Merk?",
+            "slug" => "sigaar-merk",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Roken Soort?",
+            "slug" => "roken-soort",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Welk huisdier heb je?",
+            "slug" => "huisdier",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Welke auto heb je?",
+            "slug" => "auto",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Vaatwasser?",
+            "slug" => "vaatwasser",
+            "answer_type" => "checkbox",
+            "rules" => ['nullable'],
+            'visible' => false,
+            'searchable' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je gezinssamenstelling?",
+            "slug" => "gezinssamenstelling",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
+        ]);
+        QuestionFactory::new()->create([
+            "question" => "Wat is je burgelijkestaat?",
+            "slug" => "burgelijkestaat",
+            "answer_type" => "text",
+            "rules" => ['required', 'string', 'max:255'],
+            'visible' => false,
         ]);
     }
 }

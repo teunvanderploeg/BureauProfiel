@@ -15,26 +15,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 
-function getFilter(): array
-{
-    $filters = [];
-
-    $questions = Question::all();
-
-    foreach ($questions as $question) {
-        if ($question->answer_type == 'checkbox') {
-//            $filters[] = SelectFilter::make($question->slug)->relationship('answers', 'answer');
-//            $filters[] = Filter::make($question->slug)->query(fn(Builder $query): Builder =>
-//            $query->join('answers', function ($join) use ($question) {
-//                $join->on('respondents.id', '=', 'answers.respondent_id')
-//                    ->where('answers.answer', '=', 'Yes');
-//            })->select('respondents.*')
-//            );
-        }
-    }
-    return $filters;
-}
-
 class RespondentResource extends Resource
 {
     protected static ?string $model = Respondent::class;
@@ -48,7 +28,6 @@ class RespondentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('email')
-                    ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('accepted')
@@ -73,7 +52,7 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters(getFilter());
+            ->filters([]);
     }
 
     public static function getRelations(): array

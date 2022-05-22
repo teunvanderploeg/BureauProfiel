@@ -28,7 +28,6 @@ class RespondentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('email')
-                    ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('accepted')

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('sample_answers')->nullable();
             $table->text('rules')->nullable();
             $table->boolean('visible')->default(1);
+            $table->boolean('searchable')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

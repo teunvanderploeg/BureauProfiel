@@ -24,19 +24,43 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                    ->visible(fn (Component $livewire): bool => $livewire instanceof Pages\CreateUser),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->required()
+                            ->maxLength(255)
+                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                            ->visible(fn (Component $livewire): bool => $livewire instanceof Pages\CreateUser),
+                    ])
+                    ->columns([
+                        'sm' => 2,
+                    ])
+                    ->columnSpan([
+                        'sm' => 2,
+                    ]),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\Placeholder::make('created_at')
+                            ->label('Created at')
+                            ->content(fn (?User $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                        Forms\Components\Placeholder::make('updated_at')
+                            ->label('Last modified at')
+                            ->content(fn (?User $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                    ])
+                    ->columnSpan(1)
+                    ->visible(fn (Component $livewire): bool => $livewire instanceof Pages\EditUser),
+            ])
+            ->columns([
+                'sm' => 3,
+                'lg' => null,
             ]);
     }
 

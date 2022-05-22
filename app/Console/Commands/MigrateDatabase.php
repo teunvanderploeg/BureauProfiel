@@ -90,7 +90,7 @@ class MigrateDatabase extends Command
     {
         Answer::query()->create([
             'respondent_id' => $this->respondent->id,
-            'question_id' => Question::query()->firstWhere('slug', '=', $questionSlug)->first('id')->id,
+            'question_id' => Question::query()->where('slug', '=', $questionSlug)->first('id')->id,
             'answer' => $answer,
         ]);
     }

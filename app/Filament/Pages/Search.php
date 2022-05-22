@@ -126,7 +126,11 @@ class Search extends Page
         $emails = $respondents->get('email');
         $emailsString = '';
         foreach ($emails as $email) {
-            $emailsString = $emailsString . ' ' . $email->email;
+            if ($emailsString == null){
+                $emailsString = $email->email;
+            } else {
+                $emailsString = $emailsString . '\n' . $email->email;
+            }
         }
         $this->emailList = $emailsString;
     }

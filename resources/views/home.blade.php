@@ -176,4 +176,21 @@
             </div>
         </div>
     </div>
+    <div class="bg-white">
+        <div class="container mx-8 py-3 pb-5 sm:mx-auto w-full pt-20">
+            <div class="w-1/2">
+                <h3 class="text-3xl mb-10 font-bold">Met deze opdrachtgevers <br> Werken we samen</h3>
+            </div>
+            <div class="items flex flex-row flex-wrap -mx-5 lg:pr-72">
+                <x-business-logo-item image="LogoAmsterdam"/>
+                <x-business-logo-item image="LogoOverheid"/>
+                <x-business-logo-item image="LogoSoaids"/>
+                <x-business-logo-item image="LogoMotivation"/>
+                <x-business-logo-item image="LogoMWM2"/>
+                <x-business-logo-item image="LogoNpo"/>
+                <x-business-logo-item image="LogoMARE"/>
+                <x-business-logo-item image="LogoKantar"/>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -2,6 +2,7 @@
 @import '~tippy.js/dist/tippy.css';
 @import '~tippy.js/themes/light.css';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://unpkg.com/swiper@8/swiper-bundle.min.css');
 
 @tailwind base;
 @tailwind components;

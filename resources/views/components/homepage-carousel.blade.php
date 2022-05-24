@@ -1,4 +1,4 @@
-<div class="m-auto md:block hidden relative pt-8" x-data="{activeSlide: 0, slides: [0, 1, 2, 3]}">
+<div class="m-auto md:block hidden relative pt-8" x-data="{activeSlide: {{ random_int(0, 3) }}, slides: [0, 1, 2, 3]}">
     <div class="">
         <img x-show="activeSlide == 0" class="h-[35rem]" src="{{ asset('images/respondentheader1.png') }}"
              alt="respondent 1">

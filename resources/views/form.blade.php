@@ -19,7 +19,7 @@
                                class="inline-block w-1/3 mr-6 text-sm text-gray-600">
                             {{ $question->question }}
                         </label>
-                        <div class="w-1/2 ml-auto text-right">
+                        <div class="w-1/3 ml-auto text-right">
                             <x-input :question="$question"/>
                         </div>
                     </div>

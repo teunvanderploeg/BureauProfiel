@@ -14,18 +14,21 @@
             @csrf
             @foreach($questions as $question)
                 <div class="mb-5">
-                <div class="flex items-center">
-                    <label for="{{ $question->slug }}"
-                           class="inline-block w-1/3 mr-6 text-sm text-gray-600">
-                        {{ $question->question }}
-                    </label>
-                    <x-input :question="$question" />
-                </div>
-                @error($question->slug)
+                    <div class="flex items-center">
+                        <label for="{{ $question->slug }}"
+                               class="inline-block w-1/3 mr-6 text-sm text-gray-600">
+                            {{ $question->question }}
+                        </label>
+                        <div class="w-1/2 ml-auto text-right">
+                            <x-input :question="$question"/>
+                        </div>
+                    </div>
+                    @error($question->slug)
                     <div class="text-red-500 text-xs font-bold">{{ $message }}</div>
-                @enderror
+                    @enderror
                 </div>
             @endforeach
+
             <div class="text-right">
                 <input type="submit" value="Send"
                        class="text-white font-bold whitespace-nowrap cursor-pointer px-7 py-2 rounded-r-2xl transition border border-4 hover:text-black hover:bg-bp_white rounded-b-2xl bg-bp_purple border-bp_purple">

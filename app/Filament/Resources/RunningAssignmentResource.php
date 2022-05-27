@@ -32,7 +32,7 @@ class RunningAssignmentResource extends Resource
                 Forms\Components\Toggle::make('visible')
                     ->required(),
                 Forms\Components\TextInput::make('link')
-                    ->url()
+                    ->hint("'mailto:info@bureauprofiel.com' of 'https://google.com'")
                     ->required()
                     ->maxLength(500),
                 Forms\Components\FileUpload::make('image')

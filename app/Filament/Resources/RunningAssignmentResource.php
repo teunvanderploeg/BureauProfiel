@@ -16,8 +16,9 @@ class RunningAssignmentResource extends Resource
     protected static ?string $model = RunningAssignment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-puzzle';
-
+    protected static ?string $navigationLabel = 'Lopende Opdrachten';
     protected static ?string $navigationGroup = 'On site';
+
 
     public static function form(Form $form): Form
     {

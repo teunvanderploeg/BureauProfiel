@@ -18,7 +18,7 @@ class AnswerResource extends Resource
     protected static ?string $model = Answer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
+    protected static ?string $navigationLabel = 'Antwoorden';
     protected static ?string $navigationGroup = 'Respondent';
 
     public static function form(Form $form): Form

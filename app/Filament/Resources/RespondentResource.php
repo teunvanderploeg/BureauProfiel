@@ -20,7 +20,7 @@ class RespondentResource extends Resource
     protected static ?string $model = Respondent::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-
+    protected static ?string $navigationLabel = 'Respondenten';
     protected static ?string $navigationGroup = 'Respondent';
 
     public static function form(Form $form): Form

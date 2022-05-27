@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class RespondentResource extends Resource
 {
@@ -50,7 +51,10 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters([]);
+            ->filters([
+                Tables\Filters\Filter::make('Not verified')
+                    ->query(fn (Builder $query): Builder => $query->where('accepted', False)),
+            ]);
     }
 
     public static function getRelations(): array

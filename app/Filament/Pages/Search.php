@@ -47,7 +47,7 @@ class Search extends Page
             }
         }
 
-        $respondentQuery = Respondent::query();
+        $respondentQuery = Respondent::query()->where('accepted', True);
 
         if (($data['nodes'] ?? null) != null) {
             $respondentQuery->where('notes', 'like', '%' . $data['nodes'] . '%');

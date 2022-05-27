@@ -11,9 +11,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
 
 class RespondentResource extends Resource
 {
@@ -22,6 +19,7 @@ class RespondentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-collection';
     protected static ?string $navigationLabel = 'Respondenten';
     protected static ?string $navigationGroup = 'Respondent';
+    protected static ?string $recordTitleAttribute = 'email';
 
     public static function form(Form $form): Form
     {

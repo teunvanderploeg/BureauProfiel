@@ -42,8 +42,6 @@ class AnswerResource extends Resource
                 Tables\Columns\TextColumn::make('respondent.email')->searchable(),
                 Tables\Columns\TextColumn::make('question.question')->searchable(),
                 Tables\Columns\TextColumn::make('answer')->searchable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

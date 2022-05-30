@@ -16,7 +16,7 @@ class TextResource extends Resource
     protected static ?string $model = Text::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-annotation';
-
+    protected static ?string $navigationLabel = 'Teksten';
     protected static ?string $navigationGroup = 'On site';
 
     public static function form(Form $form): Form

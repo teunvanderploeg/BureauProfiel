@@ -182,7 +182,7 @@ class QuestionSeeder extends Seeder
             "rules" => ['nullable', 'required_if:dagelijkse-bezigheid,werkzaam'],
         ]);
         Question::query()->create([
-            "question" => "Indien werkzaam. In welke functie?",
+            "question" => "Indien werkzaam. In welke functie en branche?",
             "slug" => "werkzaam-functie",
             "answer_type" => "text",
             "rules" => ['nullable', 'required_if:dagelijkse-bezigheid,werkzaam', 'string', 'max:255'],

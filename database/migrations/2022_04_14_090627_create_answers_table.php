@@ -18,10 +18,9 @@ return new class extends Migration
             $table->foreignId('respondent_id');
             $table->foreignId('question_id');
             $table->string('answer')->nullable();
-            $table->softDeletes();
             $table->timestamps();
-            $table->foreign('respondent_id')->references('id')->on('respondents');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('respondent_id')->references('id')->on('respondents')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

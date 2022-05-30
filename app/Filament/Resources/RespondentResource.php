@@ -11,8 +11,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class RespondentResource extends Resource
@@ -20,8 +18,9 @@ class RespondentResource extends Resource
     protected static ?string $model = Respondent::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-
+    protected static ?string $navigationLabel = 'Respondenten';
     protected static ?string $navigationGroup = 'Respondent';
+    protected static ?string $recordTitleAttribute = 'email';
 
     public static function form(Form $form): Form
     {
@@ -52,7 +51,10 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
-            ->filters([]);
+            ->filters([
+                Tables\Filters\Filter::make('Not verified')
+                    ->query(fn (Builder $query): Builder => $query->where('accepted', False)),
+            ]);
     }
 
     public static function getRelations(): array

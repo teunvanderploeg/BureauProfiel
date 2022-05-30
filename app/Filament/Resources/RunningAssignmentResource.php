@@ -16,8 +16,9 @@ class RunningAssignmentResource extends Resource
     protected static ?string $model = RunningAssignment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-puzzle';
-
+    protected static ?string $navigationLabel = 'Lopende Opdrachten';
     protected static ?string $navigationGroup = 'On site';
+
 
     public static function form(Form $form): Form
     {
@@ -32,7 +33,7 @@ class RunningAssignmentResource extends Resource
                 Forms\Components\Toggle::make('visible')
                     ->required(),
                 Forms\Components\TextInput::make('link')
-                    ->url()
+                    ->hint("'mailto:info@bureauprofiel.com' of 'https://google.com'")
                     ->required()
                     ->maxLength(500),
                 Forms\Components\FileUpload::make('image')

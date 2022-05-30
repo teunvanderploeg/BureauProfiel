@@ -19,6 +19,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationLabel = 'Gebruikers';
 
     public static function form(Form $form): Form
     {
@@ -70,7 +71,6 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\BooleanColumn::make('email_verified_at')->label('Verified'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('M j, Y')
                     ->sortable(),
@@ -78,12 +78,7 @@ class UserResource extends Resource
                     ->dateTime('M j, Y')
                     ->sortable(),
             ])
-            ->filters([
-                Tables\Filters\Filter::make('verified')
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
-                Tables\Filters\Filter::make('unverified')
-                    ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
-            ]);
+            ->filters([]);
     }
 
     public static function getRelations(): array

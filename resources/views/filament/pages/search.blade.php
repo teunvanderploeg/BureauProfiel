@@ -1,7 +1,7 @@
 @if($searchPage)
     <div class="container">
         <form wire:submit.prevent="search(Object.fromEntries(new FormData($event.target)))">
-            <div class="grid grid-cols-3 gap-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
                 @foreach($questions as $question)
                     <div class="flex p-2 justify-between bg-white rounded-lg w-full">
                         <div class="w-3/5 flex">
@@ -56,7 +56,7 @@
                     </div>
                     <div class="w-2/5">
                         <input type="text" name="nodes" class="text-xs w-full my-auto"
-                               @if(isset($data['notes'])) value="{{ $data['notes'] }}" @endif />
+                               @if(isset($data)) value="{{ $data['nodes'] }}" @endif />
                     </div>
                 </div>
             </div>
@@ -84,7 +84,6 @@
                     </div>
                 </div>
             </div>
-            @foreach($respondent as $respondent)
                 <div class="flex flex-col p-2 rounded-2xl">
                     <div class="container grid grid-cols-3">
                         @foreach($respondent->answers as $answer)
@@ -114,7 +113,6 @@
                                   class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea>
                     </div>
                 </div>
-            @endforeach
             <div>
                 @else
                     <div class="flex text-center justify-center">
@@ -137,6 +135,10 @@
                                 class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
                             Copy all emails
                         </button>
+                    <button wire:click="sortRespondents('postcode')"
+                            class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                         Postcode {{ $searchOnPostcode ? "↑" : "↓"}}
+                    </button>
                 </div>
             </div>
         @endif

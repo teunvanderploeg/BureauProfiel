@@ -17,12 +17,13 @@ class Search extends Page
 
     public $respondents;
     public $respondent;
-    public $searchPage = True;
+    public bool $searchPage = True;
     public $questions;
-    public $respondentCount = 0;
+    public int $respondentCount = 0;
     public $respondentsCount;
     public $emailList;
     public $data;
+    public bool $searchOnPostcode = False;
 
     public function mount()
     {
@@ -59,24 +60,47 @@ class Search extends Page
         $this->setEmailList($respondents);
 
         $this->respondents = $respondents->get();
-        $this->respondent = $this->respondents->take(1)->skip(0);
+        $this->respondent = $this->respondents->first();
         $this->changeSearchPage();
     }
 
     public function nextRespondent()
     {
-        if ($this->respondentCount != ($this->respondentsCount - 1)){
+        if ($this->respondentCount != ($this->respondentsCount - 1)) {
             $this->respondentCount++;
-            $this->respondent = $this->respondents->skip($this->respondentCount)->take(1);
+            $this->respondent = Respondent::query()->find($this->respondents[$this->respondentCount]['id']);
         }
     }
 
     public function previousRespondent()
     {
-        if ($this->respondentCount != 0){
+        if ($this->respondentCount != 0) {
             $this->respondentCount--;
-            $this->respondent = $this->respondents->skip($this->respondentCount)->take(1);
+            $this->respondent = Respondent::query()->find($this->respondents[$this->respondentCount]['id']);
         }
+    }
+
+    public function sortRespondents($questionSlug)
+    {
+        $questionId = Question::where('slug', '=', $questionSlug)->pluck('id')->first();
+        $questions = collect();
+        $respondents = collect();
+
+        foreach ($this->respondents as $respondent) {
+            $respondent = Respondent::query()->find($respondent['id']);
+            $questions->add($respondent->answers()->where('answers.question_id', '=', $questionId)->first());
+        }
+
+        $questions = $this->searchOnPostcode ? $questions->sortByDesc('answer') : $questions->sortBy('answer');
+        $this->searchOnPostcode = !$this->searchOnPostcode;
+
+        foreach ($questions as $question) {
+            $respondents->add($question->respondent);
+        }
+
+        $this->respondentCount = 0;
+        $this->respondents = $respondents;
+        $this->respondent = $this->respondents->first();
     }
 
     function getDuplicates($array): array

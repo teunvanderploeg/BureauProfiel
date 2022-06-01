@@ -136,8 +136,12 @@
                             Copy all emails
                         </button>
                     <button wire:click="sortRespondents('postcode')"
-                            class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
-                         Postcode {{ $searchOnPostcode ? "↑" : "↓"}}
+                            class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                         Postcode {{ $postcodeDesc ? "↓" : "↑"}}
+                    </button>
+                    <button wire:click="sortRespondents('geboortedatum')"
+                            class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                        Geboortedatum {{ $dateOfBirthDesc ? "↓" : "↑"}}
                     </button>
                 </div>
             </div>

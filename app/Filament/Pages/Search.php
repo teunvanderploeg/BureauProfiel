@@ -23,7 +23,8 @@ class Search extends Page
     public $respondentsCount;
     public $emailList;
     public $data;
-    public bool $searchOnPostcode = False;
+    public bool $postcodeDesc = False;
+    public bool $dateOfBirthDesc = False;
 
     public function mount()
     {
@@ -91,8 +92,8 @@ class Search extends Page
             $questions->add($respondent->answers()->where('answers.question_id', '=', $questionId)->first());
         }
 
-        $questions = $this->searchOnPostcode ? $questions->sortByDesc('answer') : $questions->sortBy('answer');
-        $this->searchOnPostcode = !$this->searchOnPostcode;
+        $desc = $this->needToBeDescending($questionSlug);
+        $questions = $desc ? $questions->sortByDesc('answer') : $questions->sortBy('answer');
 
         foreach ($questions as $question) {
             $respondents->add($question->respondent);
@@ -158,6 +159,28 @@ class Search extends Page
             }
         }
         $this->emailList = $emailsString;
+    }
+
+    /**
+     * @param $questionSlug
+     * @return bool
+     */
+    public function needToBeDescending($questionSlug): bool
+    {
+        $desc = false;
+        if ($questionSlug == 'geboortedatum') {
+            if ($this->dateOfBirthDesc) {
+                $desc = true;
+            }
+            $this->dateOfBirthDesc = !$this->dateOfBirthDesc;
+        }
+        if ($questionSlug == 'postcode') {
+            if ($this->postcodeDesc) {
+                $desc = true;
+            }
+            $this->postcodeDesc = !$this->postcodeDesc;
+        }
+        return $desc;
     }
 
 }

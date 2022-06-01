@@ -41,8 +41,7 @@ class Search extends Page
         foreach ($this->questions as $question) {
             $query = Answer::query()->with('respondent');
             if (!in_array($question->slug, $this->childQuestionArray)) {
-                if (($data[$question->slug] ?? null) != null || ($data[$question->slug . '-1'] ?? null) != null ) {
-
+                if (($data[$question->slug] ?? null) != null || ($data[$question->slug . '-1'] ?? null) != null) {
                     $this->makeQuery($question, $query, $data);
 
                     $respondentsArray = $this->getRespondents($query, $firstRound, $respondentsArray);
@@ -53,7 +52,6 @@ class Search extends Page
         }
 
         if (($data['ageChild-1'] ?? null) != null && ($data['ageChild-2'] ?? null) != null) {
-
             $questions = Question::query()
                 ->where('slug', 'like', 'geboortedatum-kind' . '%')
                 ->get();
@@ -71,13 +69,14 @@ class Search extends Page
         }
 
         $respondents = $firstRound ? $respondentQuery : $respondentQuery->whereIn('id', $respondentsArray);
-        $this->respondentsCount = $respondents->count();
-        $this->respondentCount = 0;
 
         $this->setEmailList($respondents);
 
+        $this->respondentsCount = $respondents->count();
+        $this->respondentCount = 0;
         $this->respondents = $respondents->get();
         $this->respondent = $this->respondents->first();
+
         $this->changeSearchPage();
     }
 
@@ -144,7 +143,7 @@ class Search extends Page
                 break;
             case 'text':
                 if ($question->slug == 'postcode') {
-                    $query->where('answer', 'like',$data[$question->slug] . '%');
+                    $query->where('answer', 'like', $data[$question->slug] . '%');
                 } else {
                     $query->where('answer', 'like', '%' . $data[$question->slug] . '%');
                 }
@@ -168,7 +167,7 @@ class Search extends Page
         $emails = $respondents->get('email');
         $emailsString = '';
         foreach ($emails as $email) {
-            if ($emailsString == null){
+            if ($emailsString == null) {
                 $emailsString = $email->email;
             } else {
                 $emailsString = $emailsString . '\n' . $email->email;

@@ -25,6 +25,7 @@ class Search extends Page
     public $data;
     public bool $postcodeDesc = False;
     public bool $dateOfBirthDesc = False;
+    public array $childQuestionArray = ["geboortedatum-kind-1", "geslacht-kind-1", "geboortedatum-kind-2", "geslacht-kind-2", "geboortedatum-kind-3", "geslacht-kind-3", "geboortedatum-kind-4", "geslacht-kind-4"];
 
     public function mount()
     {
@@ -39,14 +40,28 @@ class Search extends Page
 
         foreach ($this->questions as $question) {
             $query = Answer::query()->with('respondent');
-            if (($data[$question->slug] ?? null) != null || ($data[$question->slug . '-1'] ?? null) != null) {
+            if (!in_array($question->slug, $this->childQuestionArray)) {
+                if (($data[$question->slug] ?? null) != null || ($data[$question->slug . '-1'] ?? null) != null ) {
 
-                $this->makeQuery($question, $query, $data);
+                    $this->makeQuery($question, $query, $data);
 
-                $respondentsArray = $this->getRespondents($query, $firstRound, $respondentsArray);
+                    $respondentsArray = $this->getRespondents($query, $firstRound, $respondentsArray);
 
-                $firstRound = False;
+                    $firstRound = False;
+                }
             }
+        }
+
+        if (($data['ageChild-1'] ?? null) != null && ($data['ageChild-2'] ?? null) != null) {
+
+            $questions = Question::query()
+                ->where('slug', 'like', 'geboortedatum-kind' . '%')
+                ->get();
+
+            $respondentsArrayChildes = $this->getArrayOfRespondentsWithChilds($data, $questions);
+
+            $respondentsArray = $firstRound ? $respondentsArrayChildes : $this->getDuplicates(array_merge($respondentsArray, $respondentsArrayChildes));
+            $firstRound = false;
         }
 
         $respondentQuery = Respondent::query()->where('accepted', True);
@@ -57,6 +72,7 @@ class Search extends Page
 
         $respondents = $firstRound ? $respondentQuery : $respondentQuery->whereIn('id', $respondentsArray);
         $this->respondentsCount = $respondents->count();
+        $this->respondentCount = 0;
 
         $this->setEmailList($respondents);
 
@@ -161,10 +177,6 @@ class Search extends Page
         $this->emailList = $emailsString;
     }
 
-    /**
-     * @param $questionSlug
-     * @return bool
-     */
     public function needToBeDescending($questionSlug): bool
     {
         $desc = false;
@@ -181,6 +193,20 @@ class Search extends Page
             $this->postcodeDesc = !$this->postcodeDesc;
         }
         return $desc;
+    }
+
+    public function getArrayOfRespondentsWithChilds($data, $questions): array
+    {
+        $respondentsArrayChildes = [];
+        $query = Answer::query()->with('respondent');
+
+        foreach ($questions as $question) {
+            $query->where('question_id', '=', $question->id);
+            $query->whereBetween('answer', [date($data['ageChild-1']), date($data['ageChild-2'])]);
+            $respondentsArrayChildes = array_merge($respondentsArrayChildes, $query->get()->pluck('respondent.id')->toArray());
+        }
+
+        return array_unique($respondentsArrayChildes);
     }
 
 }

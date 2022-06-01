@@ -3,53 +3,70 @@
         <form wire:submit.prevent="search(Object.fromEntries(new FormData($event.target)))">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
                 @foreach($questions as $question)
-                    <div class="flex p-2 justify-between bg-white rounded-lg w-full">
-                        <div class="w-3/5 flex">
-                            <p class="text-xs my-auto pr-1">{{ ucfirst($question->question) }}</p>
-                        </div>
-                        <div class="w-2/5">
-                            @switch($question->answer_type)
-                                @case('select')
-                                    <div class="w-full h-full flex">
-                                        <select name="{{ $question->slug }}" class="text-xs mx-auto w-full my-auto">
-                                            <option value=""></option>
-                                            @foreach($question->getArrayOfAnswers() as $answers)
-                                                <option
-                                                    @if(isset($data[$question->slug]) && $data[$question->slug] == $answers) selected
-                                                    @endif
-                                                    value="{{ $answers }}">{{ $answers }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @break
+                    @if(!in_array($question->slug, $childQuestionArray))
+                        <div class="flex p-2 justify-between bg-white rounded-lg w-full">
+                            <div class="w-3/5 flex">
+                                <p class="text-xs my-auto pr-1">{{ ucfirst($question->question) }}</p>
+                            </div>
+                            <div class="w-2/5">
+                                @switch($question->answer_type)
+                                    @case('select')
+                                        <div class="w-full h-full flex">
+                                            <select name="{{ $question->slug }}" class="text-xs mx-auto w-full my-auto">
+                                                <option value=""></option>
+                                                @foreach($question->getArrayOfAnswers() as $answers)
+                                                    <option
+                                                        @if(isset($data[$question->slug]) && $data[$question->slug] == $answers) selected
+                                                        @endif
+                                                        value="{{ $answers }}">{{ $answers }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @break
 
-                                @case('checkbox')
-                                    <div class="w-full h-full flex">
-                                        <input type="checkbox" @if(isset($data[$question->slug])) checked @endif
-                                        name="{{ $question->slug }}" class="ml-auto my-auto">
-                                    </div>
-                                    @break
-                                @case('date')
-                                    <div class="flex flex-col mx-auto">
-                                        <input type="date" name="{{ $question->slug }}-1"
-                                               @if(isset($data)) value="{{ $data["$question->slug-1"] }}" @endif
-                                               class="text-xs p-1 w-full h-6">
-                                        <input type="date" name="{{ $question->slug }}-2"
-                                               @if(isset($data)) value="{{ $data["$question->slug-2"] }}" @endif
-                                               class="text-xs p-1 w-full h-6">
-                                    </div>
-                                    @break
-                                @default
-                                    <div class="w-full h-full flex">
-                                        <input type="{{ $question->answer_type }}"
-                                               @if(isset($data)) value="{{ $data[$question->slug] }}" @endif
-                                               name="{{ $question->slug }}"
-                                               class="text-xs w-full my-auto">
-                                    </div>
-                            @endswitch
+                                    @case('checkbox')
+                                        <div class="w-full h-full flex">
+                                            <input type="checkbox" @if(isset($data[$question->slug])) checked @endif
+                                            name="{{ $question->slug }}" class="ml-auto my-auto">
+                                        </div>
+                                        @break
+                                    @case('date')
+                                        <div class="flex flex-col mx-auto">
+                                            <input type="date" name="{{ $question->slug }}-1"
+                                                   @if(isset($data)) value="{{ $data["$question->slug-1"] }}" @endif
+                                                   class="text-xs p-1 w-full h-6">
+                                            <input type="date" name="{{ $question->slug }}-2"
+                                                   @if(isset($data)) value="{{ $data["$question->slug-2"] }}" @endif
+                                                   class="text-xs p-1 w-full h-6">
+                                        </div>
+                                        @break
+                                    @default
+                                        <div class="w-full h-full flex">
+                                            <input type="{{ $question->answer_type }}"
+                                                   @if(isset($data)) value="{{ $data[$question->slug] }}" @endif
+                                                   name="{{ $question->slug }}"
+                                                   class="text-xs w-full my-auto">
+                                        </div>
+                                @endswitch
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+                <div class="flex p-2 justify-between bg-white rounded-lg w-full">
+                    <div class="w-3/5 flex">
+                        <p class="text-xs my-auto pr-1">Geboortedatum kind</p>
+                    </div>
+                    <div class="w-2/5">
+                        <div class="flex flex-col mx-auto">
+                            <input type="date" name="ageChild-1"
+                                   @if(isset($data)) value="{{ $data["ageChild-1"] }}" @endif
+                                   class="text-xs p-1 w-full h-6">
+                            <input type="date" name="ageChild-2"
+                                   @if(isset($data)) value="{{ $data["ageChild-2"] }}" @endif
+                                   class="text-xs p-1 w-full h-6">
                         </div>
                     </div>
-                @endforeach
+                </div>
                 <div class="flex p-2 justify-between bg-white rounded-lg w-full">
                     <div class="w-3/5 flex">
                         <p class="text-xs my-auto pr-1">Notes</p>
@@ -84,35 +101,35 @@
                     </div>
                 </div>
             </div>
-                <div class="flex flex-col p-2 rounded-2xl">
-                    <div class="container grid grid-cols-3">
-                        @foreach($respondent->answers as $answer)
-                            @if($answer->question->searchable && $answer->answer != null)
-                                <div class="p-2 m-2 text-sm bg-white rounded-2xl">
-                                    <p class="font-light">{{ $answer->question->question }}</p>
-                                    <p class="font-bold">
-                                        @if($answer->question->answer_type == 'checkbox')
-                                            @if($answer->answer == 1)
-                                                Yes
-                                            @elseif($answer->answer == 0)
-                                                No
-                                            @else
-                                                {{ $answer->answer }}
-                                            @endif
+            <div class="flex flex-col p-2 rounded-2xl">
+                <div class="container grid grid-cols-3">
+                    @foreach($respondent->answers as $answer)
+                        @if($answer->question->searchable && $answer->answer != null)
+                            <div class="p-2 m-2 text-sm bg-white rounded-2xl">
+                                <p class="font-light">{{ $answer->question->question }}</p>
+                                <p class="font-bold">
+                                    @if($answer->question->answer_type == 'checkbox')
+                                        @if($answer->answer == 1)
+                                            Yes
+                                        @elseif($answer->answer == 0)
+                                            No
                                         @else
                                             {{ $answer->answer }}
                                         @endif
-                                    </p>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="p-2 m-2 text-sm bg-white rounded-2xl h-full">
-                        <p class="font-light">Notes.</p>
-                        <textarea id="notes" readonly
-                                  class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea>
-                    </div>
+                                    @else
+                                        {{ $answer->answer }}
+                                    @endif
+                                </p>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
+                <div class="p-2 m-2 text-sm bg-white rounded-2xl h-full">
+                    <p class="font-light">Notes.</p>
+                    <textarea id="notes" readonly
+                              class="w-full text-sm border-none outline-none overflow-auto focus:border-none focus:outline-none">{{ $respondent->notes }}</textarea>
+                </div>
+            </div>
             <div>
                 @else
                     <div class="flex text-center justify-center">
@@ -135,14 +152,14 @@
                                 class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
                             Copy all emails
                         </button>
-                    <button wire:click="sortRespondents('postcode')"
-                            class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
-                         Postcode {{ $postcodeDesc ? "↓" : "↑"}}
-                    </button>
-                    <button wire:click="sortRespondents('geboortedatum')"
-                            class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
-                        Geboortedatum {{ $dateOfBirthDesc ? "↓" : "↑"}}
-                    </button>
+                        <button wire:click="sortRespondents('postcode')"
+                                class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                            Postcode {{ $postcodeDesc ? "↓" : "↑"}}
+                        </button>
+                        <button wire:click="sortRespondents('geboortedatum')"
+                                class="text-white text-sm font-bold whitespace-nowrap cursor-pointer px-2 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+                            Geboortedatum {{ $dateOfBirthDesc ? "↓" : "↑"}}
+                        </button>
                 </div>
             </div>
         @endif

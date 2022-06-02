@@ -54,16 +54,34 @@
                 @endforeach
                 <div class="flex p-2 justify-between bg-white rounded-lg w-full">
                     <div class="w-3/5 flex">
-                        <p class="text-xs my-auto pr-1">Geboortedatum kind</p>
+                        <p class="text-xs my-auto pr-1">Geboortedatum kind?</p>
                     </div>
                     <div class="w-2/5">
                         <div class="flex flex-col mx-auto">
-                            <input type="date" name="ageChild-1"
-                                   @if(isset($data)) value="{{ $data["ageChild-1"] }}" @endif
+                            <input type="date" name="age-child-1"
+                                   @if(isset($data)) value="{{ $data["age-child-1"] }}" @endif
                                    class="text-xs p-1 w-full h-6">
-                            <input type="date" name="ageChild-2"
-                                   @if(isset($data)) value="{{ $data["ageChild-2"] }}" @endif
+                            <input type="date" name="age-child-2"
+                                   @if(isset($data)) value="{{ $data["age-child-2"] }}" @endif
                                    class="text-xs p-1 w-full h-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex p-2 justify-between bg-white rounded-lg w-full">
+                    <div class="w-3/5 flex">
+                        <p class="text-xs my-auto pr-1">Geslacht Kind?</p>
+                    </div>
+                    <div class="w-2/5">
+                        <div class="w-full h-full flex">
+                            <select name="gender-child" class="text-xs mx-auto w-full my-auto">
+                                <option value=""></option>
+                                <option @if(isset($data) && $data['gender-child'] == 'Jongen') selected @endif
+                                value="Jongen">Jongen
+                                </option>
+                                <option @if(isset($data) && $data['gender-child'] == 'Meisje') selected @endif
+                                value="Meisje">Meisje
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -77,13 +95,13 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right pt-4">
-                <button
-                    class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
-                    Search
-                </button>
-            </div>
-        </form>
+    <div class="text-right pt-4">
+        <button
+            class="text-white font-bold whitespace-nowrap cursor-pointer px-4 py-1 rounded-r-2xl transition border border-4 hover:text-black hover:bg-gray-100 rounded-b-2xl bg-purple-500 border-purple-500">
+            Search
+        </button>
+    </div>
+    </form>
     </div>
 @else
     <div class="container">

@@ -25,7 +25,15 @@ class Search extends Page
     public $data;
     public bool $postcodeDesc = False;
     public bool $dateOfBirthDesc = False;
-    public array $childQuestionArray = ["geboortedatum-kind-1", "geslacht-kind-1", "geboortedatum-kind-2", "geslacht-kind-2", "geboortedatum-kind-3", "geslacht-kind-3", "geboortedatum-kind-4", "geslacht-kind-4"];
+    public array $childQuestionArray = [
+        "geboortedatum-kind-1",
+        "geslacht-kind-1",
+        "geboortedatum-kind-2",
+        "geslacht-kind-2",
+        "geboortedatum-kind-3",
+        "geslacht-kind-3",
+        "geboortedatum-kind-4",
+        "geslacht-kind-4"];
 
     public function mount()
     {
@@ -37,7 +45,6 @@ class Search extends Page
         $respondentsArray = null;
         $firstRound = True;
         $this->data = collect($data);
-
         foreach ($this->questions as $question) {
             $query = Answer::query()->with('respondent');
             if (!in_array($question->slug, $this->childQuestionArray)) {
@@ -51,14 +58,25 @@ class Search extends Page
             }
         }
 
-        if (($data['ageChild-1'] ?? null) != null && ($data['ageChild-2'] ?? null) != null) {
+        if (($data['age-child-1'] ?? null) != null && ($data['age-child-2'] ?? null) != null) {
             $questions = Question::query()
                 ->where('slug', 'like', 'geboortedatum-kind' . '%')
                 ->get();
 
-            $respondentsArrayChildes = $this->getArrayOfRespondentsWithChilds($data, $questions);
+            $respondentsArrayFilteredByChildrenAge = $this->getArrayOfRespondentsFilteredByTheChildren($data, $questions);
 
-            $respondentsArray = $firstRound ? $respondentsArrayChildes : $this->getDuplicates(array_merge($respondentsArray, $respondentsArrayChildes));
+            $respondentsArray = $firstRound ? $respondentsArrayFilteredByChildrenAge : $this->getDuplicates(array_merge($respondentsArray, $respondentsArrayFilteredByChildrenAge));
+            $firstRound = false;
+        }
+
+        if (($data['gender-child'] ?? null) != null) {
+            $questions = Question::query()
+                ->where('slug', 'like', 'geslacht-kind' . '%')
+                ->get();
+
+            $respondentsArrayFilteredByChildrenGender = $this->getArrayOfRespondentsFilteredByTheChildren($data, $questions, true);
+
+            $respondentsArray = $firstRound ? $respondentsArrayFilteredByChildrenGender : $this->getDuplicates(array_merge($respondentsArray, $respondentsArrayFilteredByChildrenGender));
             $firstRound = false;
         }
 
@@ -194,14 +212,20 @@ class Search extends Page
         return $desc;
     }
 
-    public function getArrayOfRespondentsWithChilds($data, $questions): array
+    public function getArrayOfRespondentsFilteredByTheChildren($data, $questions, $gender = false): array
     {
         $respondentsArrayChildes = [];
         $query = Answer::query()->with('respondent');
 
         foreach ($questions as $question) {
             $query->where('question_id', '=', $question->id);
-            $query->whereBetween('answer', [date($data['ageChild-1']), date($data['ageChild-2'])]);
+
+            if ($gender) {
+                $query->where('answer', '=', $data['gender-child']);
+            } else {
+                $query->whereBetween('answer', [date($data['age-child-1']), date($data['age-child-2'])]);
+            }
+
             $respondentsArrayChildes = array_merge($respondentsArrayChildes, $query->get()->pluck('respondent.id')->toArray());
         }
 

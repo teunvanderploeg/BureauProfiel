@@ -28,6 +28,9 @@ php artisan migrate --seed
 
 # Link your storage
 php artisan storage:link
+
+# Import database
+php artisan import:database
 ```
 ### Setup Environment
 

@@ -53,7 +53,7 @@ class Search extends Page
 
                     $respondentsArray = $this->getRespondents($query, $firstRound, $respondentsArray);
 
-                    $firstRound = False;
+                    $firstRound = false;
                 }
             }
         }
@@ -70,6 +70,7 @@ class Search extends Page
         }
 
         if (($data['gender-child'] ?? null) != null) {
+
             $questions = Question::query()
                 ->where('slug', 'like', 'geslacht-kind' . '%')
                 ->get();

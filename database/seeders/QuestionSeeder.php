@@ -115,7 +115,6 @@ class QuestionSeeder extends Seeder
             "slug" => "geboortedatum-kind-3",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
-            'searchable' => false,
         ]);
         Question::query()->create([
             "question" => "Indien thuiswonende kinderen. Geslacht kind 3?",
@@ -123,14 +122,12 @@ class QuestionSeeder extends Seeder
             "answer_type" => "select",
             "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-3,null'],
-            'searchable' => false,
         ]);
         Question::query()->create([
             "question" => "Indien thuiswonende kinderen. geboortedatum kind 4?",
             "slug" => "geboortedatum-kind-4",
             "answer_type" => "date",
             "rules" => ['nullable', 'date'],
-            'searchable' => false,
         ]);
         Question::query()->create([
             "question" => "Indien thuiswonende kinderen. Geslacht kind 4?",
@@ -138,7 +135,6 @@ class QuestionSeeder extends Seeder
             "answer_type" => "select",
             "sample_answers" => ",Jonge,Meisje",
             "rules" => ['required_unless:geboortedatum-kind-4,null'],
-            'searchable' => false,
         ]);
         Question::query()->create([
             "question" => "Hoogst genoten afgeronde opleidingsniveau?",

@@ -8,4 +8,9 @@ use Filament\Resources\Pages\ListRecords;
 class ListRunningAssignments extends ListRecords
 {
     protected static string $resource = RunningAssignmentResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [\Filament\Actions\CreateAction::make()];
+    }
 }

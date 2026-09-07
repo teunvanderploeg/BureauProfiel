@@ -8,9 +8,9 @@ use App\Filament\Resources\QuestionResource\RelationManagers\AnswersRelationMana
 use App\Models\Answer;
 use Filament\Forms;
 use Filament\Forms\Components\BelongsToSelect;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class AnswerResource extends Resource
@@ -47,6 +47,8 @@ class AnswerResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->actions([Tables\Actions\EditAction::make()])
+            ->bulkActions([Tables\Actions\DeleteBulkAction::make()])
             ->filters([
                 //
             ]);

@@ -6,16 +6,16 @@ use App\Filament\Resources\RunningAssignmentResource\Pages;
 use App\Filament\Resources\RunningAssignmentResource\RelationManagers;
 use App\Models\RunningAssignment;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class RunningAssignmentResource extends Resource
 {
     protected static ?string $model = RunningAssignment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-puzzle';
+    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
     protected static ?string $navigationLabel = 'Lopende Opdrachten';
     protected static ?string $navigationGroup = 'On site';
 
@@ -48,7 +48,7 @@ class RunningAssignmentResource extends Resource
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('description')
                     ->limit('50'),
-                Tables\Columns\BooleanColumn::make('visible'),
+                Tables\Columns\IconColumn::make('visible')->boolean(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('link')
                     ->limit('50'),
@@ -57,6 +57,8 @@ class RunningAssignmentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->actions([Tables\Actions\EditAction::make()])
+            ->bulkActions([Tables\Actions\DeleteBulkAction::make()])
             ->filters([
                 //
             ]);

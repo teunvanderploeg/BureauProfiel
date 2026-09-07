@@ -15,3 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
     ]);
+
+mix.postCss('resources/css/filament/admin/theme.css', 'public/css/filament/admin', [
+    require('postcss-import'),
+    require('tailwindcss'),
+]);

@@ -8,4 +8,9 @@ use Filament\Resources\Pages\ListRecords;
 class ListAnswers extends ListRecords
 {
     protected static string $resource = AnswerResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [\Filament\Actions\CreateAction::make()];
+    }
 }

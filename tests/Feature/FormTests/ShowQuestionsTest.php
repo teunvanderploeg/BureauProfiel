@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\FormTests;
 
 use Database\Factories\QuestionFactory;
 use Tests\TestCase;
 
 class ShowQuestionsTest extends TestCase
 {
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_the_questions_on_the_screen_from_the_database()
     {
         $questions = QuestionFactory::times(3)->create();
@@ -22,7 +22,7 @@ class ShowQuestionsTest extends TestCase
         }
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_doesnt_show_the_question_if_it_is_not_visible()
     {
         $question = QuestionFactory::new()->create(["visible" => false]);

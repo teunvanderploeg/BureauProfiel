@@ -7,9 +7,9 @@ use App\Filament\Resources\RespondentResource\RelationManagers;
 use App\Models\Question;
 use App\Models\Respondent;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -17,7 +17,7 @@ class RespondentResource extends Resource
 {
     protected static ?string $model = Respondent::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Respondenten';
     protected static ?string $navigationGroup = 'Respondent';
     protected static ?string $recordTitleAttribute = 'email';
@@ -42,7 +42,7 @@ class RespondentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\BooleanColumn::make('accepted'),
+                Tables\Columns\IconColumn::make('accepted')->boolean(),
                 Tables\Columns\TextColumn::make('notes')
                     ->searchable()
                     ->limit('30'),
@@ -51,6 +51,8 @@ class RespondentResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->actions([Tables\Actions\EditAction::make()])
+            ->bulkActions([Tables\Actions\DeleteBulkAction::make()])
             ->filters([
                 Tables\Filters\Filter::make('Not verified')
                     ->query(fn (Builder $query): Builder => $query->where('accepted', False)),

@@ -7,9 +7,9 @@ use App\Filament\Resources\QuestionResource\RelationManagers;
 use App\Filament\Resources\QuestionResource\RelationManagers\AnswersRelationManager;
 use App\Models\Question;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class QuestionResource extends Resource
@@ -30,7 +30,7 @@ class QuestionResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\MultiSelect::make('rules')
+                Forms\Components\Select::make('rules')->multiple()
                     ->options([
                         'required' => 'Required',
                         'date' => 'Datum',
@@ -70,13 +70,15 @@ class QuestionResource extends Resource
                     ->limit('30'),
                 Tables\Columns\TextColumn::make('rules')
                     ->limit('30'),
-                Tables\Columns\BooleanColumn::make('visible'),
-                Tables\Columns\BooleanColumn::make('searchable'),
+                Tables\Columns\IconColumn::make('visible')->boolean(),
+                Tables\Columns\IconColumn::make('searchable')->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->actions([Tables\Actions\EditAction::make()])
+            ->bulkActions([Tables\Actions\DeleteBulkAction::make()])
             ->filters([
                 //
             ]);

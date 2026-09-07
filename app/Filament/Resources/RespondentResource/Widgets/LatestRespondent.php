@@ -19,7 +19,7 @@ class LatestRespondent extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('email'),
-            Tables\Columns\BooleanColumn::make('accepted'),
+            Tables\Columns\IconColumn::make('accepted')->boolean(),
         ];
     }
 }

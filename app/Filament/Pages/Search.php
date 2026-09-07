@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Search extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-search';
+    protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
     protected static ?string $navigationLabel = 'Filteren';
 
     protected static string $view = 'filament.pages.search';

@@ -6,16 +6,16 @@ use App\Filament\Resources\TextResource\Pages;
 use App\Filament\Resources\TextResource\RelationManagers;
 use App\Models\Text;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class TextResource extends Resource
 {
     protected static ?string $model = Text::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-annotation';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static ?string $navigationLabel = 'Teksten';
     protected static ?string $navigationGroup = 'On site';
 
@@ -44,6 +44,8 @@ class TextResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->actions([Tables\Actions\EditAction::make()])
+            ->bulkActions([Tables\Actions\DeleteBulkAction::make()])
             ->filters([
                 //
             ]);

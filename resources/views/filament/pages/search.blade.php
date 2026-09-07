@@ -1,3 +1,4 @@
+<x-filament-panels::page>
 @if($searchPage)
     <div class="container">
         <form wire:submit.prevent="search(Object.fromEntries(new FormData($event.target)))">
@@ -189,3 +190,5 @@
         navigator.clipboard.writeText(text);
     }
 </script>
+
+</x-filament-panels::page>

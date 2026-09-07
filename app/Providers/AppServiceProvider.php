@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Filament::serving(function () {
-            Filament::registerTheme(mix('css/app.css'));
-        });
+        //
     }
 }

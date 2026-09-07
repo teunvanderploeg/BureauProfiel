@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\FormTests;
 
 use App\Models\Answer;
 use Database\Factories\QuestionFactory;
@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class StoreFormTest extends TestCase
 {
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_stores_the_answers_from_the_form()
     {
         $emailQuestion = QuestionFactory::new()->create([
@@ -29,7 +29,7 @@ class StoreFormTest extends TestCase
         $this->assertNotEmpty(Answer::all());
     }
 
-    /** @test */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_gives_an_error_if_you_dont_send_all_the_data()
     {
         QuestionFactory::new()->create([
